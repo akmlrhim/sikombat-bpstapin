@@ -412,7 +412,7 @@
       <td style="border: none;">No. SURAT PERJANJIAN</td>
       <td style="border: none;">:</td>
       <td style="border: none;">
-        {{ $kontrak->nomor_kontrak }}/SPK/63051/KP.630/{{ $kontrak->created_at->format('m') }}/{{ $kontrak->created_at->format('Y') }}
+        {{ $kontrak->nomor_kontrak }}/SPK/63051/KP.630/{{ $kontrak->periode->format('m') }}/{{ $kontrak->periode->format('Y') }}
       </td>
     </tr>
   </table>
@@ -583,7 +583,7 @@
       <td style="border: none;">No. SURAT PERJANJIAN</td>
       <td style="border: none;">:</td>
       <td style="border: none;">
-        {{ $kontrak->nomor_kontrak }}/SPK/63051/KP.200/{{ $kontrak->created_at->format('m') }}/{{ $kontrak->created_at->format('Y') }}
+        {{ $kontrak->nomor_kontrak }}/SPK/63051/KP.200/{{ $kontrak->periode->format('m') }}/{{ $kontrak->periode->format('Y') }}
       </td>
     </tr>
   </table>
