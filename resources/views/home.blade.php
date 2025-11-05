@@ -11,35 +11,7 @@
 
 @section('content')
   <div class="row">
-    <div class="col-lg-3 col-6">
-      <!-- small box -->
-      <div class="small-box bg-light">
-        <div class="inner">
-          <h2 class="text-success font-anton">{{ $mitra }}</h2>
-          <p class="text-success text-sm">Mitra Terdaftar</p>
-        </div>
-      </div>
-    </div>
 
-    <div class="col-lg-3 col-6">
-      <!-- small box -->
-      <div class="small-box bg-light">
-        <div class="inner">
-          <h2 class="text-primary font-anton">{{ $anggaran }}</h2>
-          <p class="text-primary text-sm">Anggaran terdata</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-lg-3 col-6">
-      <!-- small box -->
-      <div class="small-box bg-light">
-        <div class="inner">
-          <h2 class="text-info font-anton">{{ $kontrak }}</h2>
-          <p class="text-info text-sm">Kontrak {{ now()->translatedFormat('F Y') }}</p>
-        </div>
-      </div>
-    </div>
 
     <div class="col-lg-3 col-6">
       <!-- small box -->

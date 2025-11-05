@@ -154,18 +154,21 @@ return [
     'attributes' => [
         'nms' => 'NMS',
         'mitra_id' => 'Mitra',
-        'tugas'                     => 'Daftar Tugas',
-        'tugas.*.anggaran_id'       => 'Anggaran',
-        'tugas.*.deskripsi_tugas'   => 'Deskripsi tugas',
-        'tugas.*.jumlah_dokumen'    => 'Jumlah dokumen',
-        'tugas.*.jumlah_target_dokumen' => 'Jumlah target dokumen',
-        'tugas.*.satuan'            => 'Satuan',
-        'tugas.*.harga_satuan'      => 'Harga per satuan',
+
         'nip' => 'NIP',
         'current_password' => 'Password saat ini',
         'new_password' => 'Password baru',
         'new_password_confirmation' => 'Konfirmasi password',
         'g-recaptcha-response' => 'reCAPTCHA',
+
+        'sub_akun.*.kode_sub_akun' => 'Kode Sub Akun',
+        'sub_akun.*.nama_sub_akun' => 'Nama Sub Akun',
+        'sub_akun.*.nama_kegiatan_sub_akun' => 'Nama Kegiatan Sub Akun',
+        'sub_akun.*.kegiatan.*.kode_akun_kegiatan' => 'Kode Akun Kegiatan',
+        'sub_akun.*.kegiatan.*.nama_kegiatan' => 'Nama Kegiatan',
+        'sub_akun.*.kegiatan.*.jumlah_sampel' => 'Jumlah Sampel',
+        'sub_akun.*.kegiatan.*.harga_satuan' => 'Harga Satuan',
+        'sub_akun.*.kegiatan.*.satuan' => 'Satuan',
     ],
 
 ];

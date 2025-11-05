@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('mitra', function (Blueprint $table) {
+        Schema::create('akun', function (Blueprint $table) {
             $table->id();
-            $table->string('nms', 120)->unique();
-            $table->string('nama_lengkap', 120)->index();
-            $table->enum('jenis_kelamin', ['Laki-Laki', 'Perempuan']);
-            $table->text('alamat');
+            $table->string('uuid');
+            $table->string('kode_akun', 15)->unique();
+            $table->string('nama_akun')->index();
+            $table->bigInteger('pagu_anggaran')->default(0);
+            $table->bigInteger('sisa_anggaran')->default(0);
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('mitra');
+        Schema::dropIfExists('akun_utama');
     }
 };

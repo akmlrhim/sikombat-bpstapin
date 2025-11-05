@@ -50,26 +50,7 @@
 
         @if (Auth::user()->role == 'ketua_tim' || Auth::user()->role == 'umum')
           <li class="nav-item">
-            <a href="{{ route('mitra.index') }}" class="nav-link {{ request()->routeIs('mitra.*') ? 'active' : '' }}">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                class="lucide lucide-handshake-icon lucide-handshake nav-icon">
-                <path d="m11 17 2 2a1 1 0 1 0 3-3" />
-                <path
-                  d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4" />
-                <path d="m21 3 1 11h-2" />
-                <path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3" />
-                <path d="M3 4h8" />
-              </svg>
-              <p>
-                Mitra
-              </p>
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a href="{{ route('anggaran.index') }}"
-              class="nav-link {{ request()->routeIs('anggaran.*') ? 'active' : '' }}">
+            <a href="{{ route('akun.index') }}" class="nav-link {{ request()->routeIs('akun.*') ? 'active' : '' }}">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                 class="lucide lucide-hand-coins-icon lucide-hand-coins nav-icon">
@@ -80,30 +61,11 @@
                 <circle cx="6" cy="5" r="3" />
               </svg>
               <p>
-                Anggaran
+                Akun
               </p>
             </a>
           </li>
         @endif
-
-        @if (Auth::user()->role == 'ketua_tim' || Auth::user()->role == 'umum')
-          <li class="nav-item">
-            <a href="{{ route('kontrak.index') }}"
-              class="nav-link {{ request()->routeIs('kontrak.*') ? 'active' : '' }}">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                class="lucide lucide-signature-icon lucide-signature nav-icon">
-                <path
-                  d="m21 17-2.156-1.868A.5.5 0 0 0 18 15.5v.5a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1c0-2.545-3.991-3.97-8.5-4a1 1 0 0 0 0 5c4.153 0 4.745-11.295 5.708-13.5a2.5 2.5 0 1 1 3.31 3.284" />
-                <path d="M3 21h18" />
-              </svg>
-              <p>
-                Kontrak
-              </p>
-            </a>
-          </li>
-        @endif
-
 
         <li class="nav-header text-muted">Tambahan</li>
 
@@ -126,10 +88,9 @@
         @endif
 
         <li class="nav-item">
-          <a href="{{ route('profil.index') }}"
-            class="nav-link {{ request()->routeIs('profil.*') ? 'active' : '' }}">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          <a href="{{ route('profil.index') }}" class="nav-link {{ request()->routeIs('profil.*') ? 'active' : '' }}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
               class="lucide lucide-user-round-cog-icon lucide-user-round-cog nav-icon">
               <path d="m14.305 19.53.923-.382" />
               <path d="m15.228 16.852-.923-.383" />
@@ -153,8 +114,8 @@
         <li class="nav-item">
           <a href="{{ route('tambahan.index') }}"
             class="nav-link {{ request()->routeIs('tambahan.*') ? 'active' : '' }}">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
               class="lucide lucide-badge-plus-icon lucide-badge-plus nav-icon">
               <path
                 d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" />

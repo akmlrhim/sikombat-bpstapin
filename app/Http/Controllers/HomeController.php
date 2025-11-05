@@ -13,10 +13,8 @@ class HomeController extends Controller
   public function index()
   {
     $title = 'Home';
-    $mitra = Mitra::count();
-    $anggaran = Anggaran::count();
+    // $mitra = Mitra::count();
     $user = User::count();
-    $kontrak = Kontrak::where('periode', date('Y-m' . '-01'))->count();
 
     $range = request('range', 7);
 
@@ -39,10 +37,7 @@ class HomeController extends Controller
 
     return view('home', compact(
       'title',
-      'mitra',
-      'anggaran',
       'user',
-      'kontrak',
       'totalVisits',
       'visitsPerDay',
       'range'
