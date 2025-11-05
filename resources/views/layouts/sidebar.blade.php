@@ -1,4 +1,4 @@
-<aside class="main-sidebar sidebar-light-success elevation-2">
+<aside class="main-sidebar sidebar-dark-primary elevation-2">
   {{-- Logo --}}
   <a href="{{ route('home') }}" class="brand-link">
     <img src="{{ asset('img/logo_bps.webp') }}" loading="lazy" title="Logo" alt="Logo"
@@ -15,7 +15,7 @@
         <a href="{{ route('profil.index') }}" class="d-block font-weight-bold text-sm">
           {{ Auth::user()->nama_lengkap }}
         </a>
-        <small class="d-block text-medium text-dark text-xs">
+        <small class="d-block text-medium text-light text-xs">
           {{ match (Auth::user()->role) {
               'ketua_tim' => 'Ketua Tim',
               'umum' => 'Umum',

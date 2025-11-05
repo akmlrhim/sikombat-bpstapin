@@ -29,33 +29,11 @@ Route::middleware('throttle:60,1')->group(function () {
 		Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 		Route::get('mitra', [MitraController::class, 'index'])->name('mitra.index');
-		Route::resource('mitra', MitraController::class)
-			->except(['index', 'show'])
-			->middleware('role:ketua_tim,umum');
-
-		Route::get('anggaran', [AnggaranController::class, 'index'])->name('anggaran.index');
-		Route::resource('anggaran', AnggaranController::class)
-			->except(['index', 'show'])
-			->middleware('role:ketua_tim,umum');
-
-		Route::get('anggaran/alokasi/{id}', [AnggaranController::class, 'editAnggaran'])->name('alocate.anggaran');
-		Route::put('anggaran/alokasi/{id}', [AnggaranController::class, 'alocateAnggaran'])->name('store.alocate.anggaran');
-		Route::put('anggaran/advance/{id}', [AnggaranController::class, 'advanceEdit'])->name('advance.edit.anggaran');
-
-
-		Route::middleware('role:ketua_tim,umum')->group(function () {
-			Route::get('kontrak/create', [KontrakController::class, 'create'])->name('kontrak.create');
-			Route::post('kontrak', [KontrakController::class, 'store'])->name('kontrak.store');
-			Route::get('kontrak/{kontrak}/edit', [KontrakController::class, 'edit'])->name('kontrak.edit');
-			Route::put('kontrak/{kontrak}', [KontrakController::class, 'update'])->name('kontrak.update');
-			Route::delete('kontrak/{kontrak}', [KontrakController::class, 'destroy'])->name('kontrak.destroy');
-		});
-
-		Route::resource('kontrak', KontrakController::class)->only(['index', 'show']);
-
-		Route::get('kontrak/{id}/file', [KontrakController::class, 'fileKontrak'])->name('kontrak.file')->middleware('role:umum');
-		Route::post('kontrak/laporan', [KontrakController::class, 'report'])->name('kontrak.laporan')->middleware('role:ketua_tim,umum');
-		Route::post('kontrak/export', [KontrakController::class, 'export'])->name('kontrak.export')->middleware('role:ketua_tim,umum');
+		Route::get('mitra/create', [MitraController::class, 'create'])->name('mitra.create')->middleware('role:ketua_tim,umum');
+		Route::post('mitra', [MitraController::class, 'store'])->name('mitra.store')->middleware('role:ketua_tim,umum');
+		Route::get('mitra/{mitra}/edit', [MitraController::class, 'edit'])->name('mitra.edit')->middleware('role:ketua_tim,umum');
+		Route::put('mitra/{mitra}', [MitraController::class, 'update'])->name('mitra.update')->middleware('role:ketua_tim,umum');
+		Route::delete('mitra/{mitra}', [MitraController::class, 'destroy'])->name('mitra.destroy')->middleware('role:ketua_tim,umum');
 
 		Route::resource('user', UserController::class)->except('show')->middleware('role:ketua_tim,umum,admin');
 

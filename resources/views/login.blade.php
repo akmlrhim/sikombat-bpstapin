@@ -9,9 +9,6 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>SIKOMBAT - Login</title>
 
-  <link rel="preconnect" href="https://rsms.me/">
-  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
-
   <link rel="manifest" href="{{ asset('manifest.json') }}">
   <link rel="apple-touch-icon" href="{{ asset('icons/icon512_rounded.png') }}">
 
@@ -22,7 +19,7 @@
 
   <style>
     body {
-      font-family: "Inter", sans-serif;
+      font-family: "Arial", sans-serif;
     }
   </style>
 </head>
