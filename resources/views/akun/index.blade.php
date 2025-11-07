@@ -18,8 +18,6 @@
                 <th>#</th>
                 <th>Kode Akun</th>
                 <th>Nama Akun</th>
-                <th>Pagu Anggaran</th>
-                <th>Sisa Anggaran</th>
                 <th>Aksi</th>
               </tr>
             </thead>
@@ -29,13 +27,6 @@
                   <td>{{ $index + $akun->firstItem() }}</td>
                   <td>{{ $row->kode_akun }}</td>
                   <td>{{ $row->nama_akun }}</td>
-                  <td class="text-end">
-                    {{ $row->pagu_anggaran ? 'Rp ' . number_format($row->pagu_anggaran, 0, ',', '.') : '-' }}
-                  </td>
-                  <td class="text-end">
-                    {{ $row->sisa_anggaran ? 'Rp ' . number_format($row->sisa_anggaran, 0, ',', '.') : '-' }}
-                  </td>
-
                   <td>
                     <a href="{{ route('akun.detail', $row->uuid) }}" class="btn btn-secondary btn-xs">Detail</a>
                     <a href="{{ route('akun.edit', $row->uuid) }}" class="btn btn-info btn-xs">Edit</a>

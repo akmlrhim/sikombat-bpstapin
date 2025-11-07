@@ -18,7 +18,7 @@ class AkunController extends Controller
   {
     return view('akun.index', [
       'title' => 'Akun',
-      'akun' => Akun::latest()->paginate(10)
+      'akun' => Akun::paginate(10)
     ]);
   }
 
@@ -37,16 +37,28 @@ class AkunController extends Controller
    */
   public function store(Request $request)
   {
+    $request->merge([
+      'pagu_anggaran' => preg_replace('/[^0-9]/', '', $request->pagu_anggaran),
+      'sisa_anggaran' => preg_replace('/[^0-9]/', '', $request->pagu_anggaran),
+    ]);
+
+    foreach ($request->sub_akun as $i => $sub) {
+      foreach ($sub['kegiatan'] as $j => $kegiatan) {
+        $request->merge([
+          "sub_akun.$i.kegiatan.$j.harga_satuan" => preg_replace('/[^0-9]/', '', $kegiatan['harga_satuan']),
+        ]);
+      }
+    }
+
     // validasi input 
     $request->validate([
       'kode_akun' => 'required|unique:akun,kode_akun',
       'nama_akun' => 'required',
       'pagu_anggaran' => 'required|numeric',
-      'sisa_anggaran' => 'nullable|numeric',
 
-      'sub_akun.*.kode_sub_akun' => 'required',
-      'sub_akun.*.nama_sub_akun' => 'required',
-      'sub_akun.*.nama_kegiatan_sub_akun' => 'required',
+      'sub_akun.*.kode_sub_akun' => 'required|unique:sub_akun,kode_sub_akun',
+      'sub_akun.*.nama_sub_akun' => 'required|unique:sub_akun,nama_sub_akun',
+      'sub_akun.*.nama_kegiatan_sub_akun' => 'required|unique:sub_akun,nama_kegiatan_sub_akun',
       'sub_akun.*.kegiatan.*.kode_akun_kegiatan' => 'required',
       'sub_akun.*.kegiatan.*.nama_kegiatan' => 'required',
       'sub_akun.*.kegiatan.*.jumlah_sampel' => 'required|numeric',
@@ -62,7 +74,7 @@ class AkunController extends Controller
         'kode_akun' => $request->kode_akun,
         'nama_akun' => $request->nama_akun,
         'pagu_anggaran' => $request->pagu_anggaran,
-        'sisa_anggaran' => $request->sisa_anggaran,
+        'sisa_anggaran' => $request->pagu_anggaran,
       ]);
 
       foreach ($request->sub_akun as $sub) {
@@ -85,7 +97,7 @@ class AkunController extends Controller
       }
 
       DB::commit();
-      return redirect()->route('akun.index')->with('success', 'Akun, Sub Akun, dan Kegiatan berhasil disimpan');
+      return redirect()->route('akun.index')->with('success', 'Akun berhasil disimpan.');
     } catch (\Exception $e) {
       DB::rollBack();
       return back()->with('error', 'Terjadi kesalahan.');
@@ -98,7 +110,10 @@ class AkunController extends Controller
    */
   public function show(string $uuid)
   {
-    //
+    return view('akun.show', [
+      'title' => 'Detail Akun',
+      'akun' => Akun::where('uuid', $uuid)->firstOrFail()
+    ]);
   }
 
   /**
@@ -108,17 +123,27 @@ class AkunController extends Controller
   {
     return view('akun.edit', [
       'title' => 'Edit Akun',
-      'akun' => Akun::with(['subAkun', 'subAkun.kegiatan'])->where('uuid', $uuid)->first(),
+      'akun' => Akun::where('uuid', $uuid)->first(),
     ]);
   }
 
   /**
    * Update the specified resource in storage.
    */
-  public function update(Request $request, $uuid)
+  public function update(Request $request, string $uuid)
   {
-    // Ambil data akun utama
-    $akun = Akun::where('uuid', $uuid)->with('subAkun.kegiatan')->firstOrFail();
+    $request->merge([
+      'pagu_anggaran' => preg_replace('/[^0-9]/', '', $request->pagu_anggaran),
+      'sisa_anggaran' => preg_replace('/[^0-9]/', '', $request->pagu_anggaran),
+    ]);
+
+    if (isset($request->sub_akun['kegiatan'])) {
+      foreach ($request->sub_akun['kegiatan'] as $j => $kegiatan) {
+        $request->merge([
+          "sub_akun.kegiatan.$j.harga_satuan" => preg_replace('/[^0-9]/', '', $kegiatan['harga_satuan']),
+        ]);
+      }
+    }
 
     // Validasi input
     $validated = $request->validate([
@@ -128,7 +153,7 @@ class AkunController extends Controller
       'sisa_anggaran' => 'required|numeric',
       'sub_akun.kode_sub_akun' => 'required|string',
       'sub_akun.nama_sub_akun' => 'required|string',
-      'sub_akun.nama_kegiatan_sub_akun' => 'nullable|string',
+      'sub_akun.nama_kegiatan_sub_akun' => 'required|string',
       'sub_akun.kegiatan.*.kode_akun_kegiatan' => 'required|string',
       'sub_akun.kegiatan.*.nama_kegiatan' => 'required|string',
       'sub_akun.kegiatan.*.jumlah_sampel' => 'required|numeric',
@@ -138,6 +163,8 @@ class AkunController extends Controller
 
     try {
       DB::beginTransaction();
+
+      $akun = Akun::where('uuid', $uuid)->with('subAkun.kegiatan')->firstOrFail();
 
       // Update data Akun utama
       $akun->update([
@@ -174,7 +201,7 @@ class AkunController extends Controller
       }
 
       DB::commit();
-      return redirect()->route('akun.index')->with('success', 'Data akun dan sub-akun berhasil diperbarui.');
+      return redirect()->route('akun.index')->with('success', 'Akun berhasil diperbarui.');
     } catch (\Exception $e) {
       DB::rollBack();
       return back()->with('error', 'Terjadi kesalahan');
@@ -186,9 +213,18 @@ class AkunController extends Controller
   /**
    * Remove the specified resource from storage.
    */
-  public function destroy(Akun $akun)
+  public function destroy($id)
   {
-    $akun->delete();
-    return redirect()->back()->with('success', 'Akun berhasil dihapus.');
+    try {
+      DB::beginTransaction();
+
+      Akun::findOrFail($id)->delete();
+
+      DB::commit();
+      return redirect()->back()->with('success', 'Akun berhasil dihapus.');
+    } catch (\Exception $e) {
+      DB::rollBack();
+      return back()->with('error', 'Terjadi kesalahan.');
+    }
   }
 }

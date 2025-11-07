@@ -53,16 +53,27 @@
             <a href="{{ route('akun.index') }}" class="nav-link {{ request()->routeIs('akun.*') ? 'active' : '' }}">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                class="lucide lucide-hand-coins-icon lucide-hand-coins nav-icon">
-                <path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17" />
-                <path d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9" />
-                <path d="m2 16 6 6" />
-                <circle cx="16" cy="9" r="2.9" />
-                <circle cx="6" cy="5" r="3" />
+                class="lucide lucide-wallet-cards-icon lucide-wallet-cards nav-icon">
+                <rect width="18" height="18" x="3" y="3" rx="2" />
+                <path d="M3 9a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2" />
+                <path d="M3 11h3c.8 0 1.6.3 2.1.9l1.1.9c1.6 1.6 4.1 1.6 5.7 0l1.1-.9c.5-.5 1.3-.9 2.1-.9H21" />
               </svg>
               <p>
                 Akun
               </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-user-check-icon lucide-user-check nav-icon">
+                <path d="m16 11 2 2 4-4" />
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+              </svg>
+              <p>Mitra</p>
             </a>
           </li>
         @endif
@@ -80,9 +91,7 @@
                 <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
                 <circle cx="9" cy="7" r="4" />
               </svg>
-              <p>
-                User
-              </p>
+              <p>User</p>
             </a>
           </li>
         @endif
@@ -114,8 +123,8 @@
         <li class="nav-item">
           <a href="{{ route('tambahan.index') }}"
             class="nav-link {{ request()->routeIs('tambahan.*') ? 'active' : '' }}">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
               class="lucide lucide-badge-plus-icon lucide-badge-plus nav-icon">
               <path
                 d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" />

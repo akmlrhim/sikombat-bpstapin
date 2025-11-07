@@ -32,7 +32,7 @@ Route::middleware('throttle:60,1')->group(function () {
 			Route::get('/', 'index')->name('index');
 			Route::get('/create', 'create')->name('create');
 			Route::post('/', 'store')->name('store');
-			Route::get('/{mitra}/detail', 'edit')->name('detail');
+			Route::get('/{mitra}/detail', 'show')->name('detail');
 			Route::get('/{mitra}/edit', 'edit')->name('edit');
 			Route::put('/{mitra}', 'update')->name('update');
 			Route::delete('/{mitra}', 'destroy')->name('destroy');
