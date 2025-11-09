@@ -14,9 +14,8 @@
 
               {{-- Akun Utama --}}
               <div class="form-group">
-                <label class="text-sm">Kode Akun</label>
-                <input type="text" name="kode_akun"
-                  class="form-control form-control-sm @error('kode_akun') is-invalid @enderror"
+                <label>Kode Akun</label>
+                <input type="text" name="kode_akun" class="form-control @error('kode_akun') is-invalid @enderror"
                   value="{{ old('kode_akun', $akun->kode_akun) }}">
                 @error('kode_akun')
                   <x-input-validation>{{ $message }}</x-input-validation>
@@ -24,9 +23,8 @@
               </div>
 
               <div class="form-group">
-                <label class="text-sm">Nama Akun</label>
-                <input type="text" name="nama_akun"
-                  class="form-control form-control-sm @error('nama_akun') is-invalid @enderror"
+                <label>Nama Akun</label>
+                <input type="text" name="nama_akun" class="form-control @error('nama_akun') is-invalid @enderror"
                   value="{{ old('nama_akun', $akun->nama_akun) }}">
                 @error('nama_akun')
                   <x-input-validation>{{ $message }}</x-input-validation>
@@ -34,9 +32,9 @@
               </div>
 
               <div class="form-group">
-                <label class="text-sm">Pagu Anggaran</label>
+                <label>Pagu Anggaran</label>
                 <input type="text" inputmode="numeric" name="pagu_anggaran" id="pagu_anggaran"
-                  class="format-rupiah form-control form-control-sm @error('pagu_anggaran') is-invalid @enderror"
+                  class="format-rupiah form-control @error('pagu_anggaran') is-invalid @enderror"
                   value="{{ old('pagu_anggaran', $akun->pagu_anggaran) }}">
                 @error('pagu_anggaran')
                   <x-input-validation>{{ $message }}</x-input-validation>
@@ -44,9 +42,9 @@
               </div>
 
               <div class="form-group">
-                <label class="text-sm">Sisa Anggaran</label>
+                <label>Sisa Anggaran</label>
                 <input type="text" inputmode="numeric" name="sisa_anggaran" id="sisa_anggaran"
-                  class="format-rupiah form-control form-control-sm @error('sisa_anggaran') is-invalid @enderror"
+                  class="format-rupiah form-control @error('sisa_anggaran') is-invalid @enderror"
                   value="{{ old('sisa_anggaran', $akun->sisa_anggaran) }}">
                 @error('sisa_anggaran')
                   <x-input-validation>{{ $message }}</x-input-validation>
@@ -60,9 +58,9 @@
               @php $sub = $akun->subAkun()->first(); @endphp
 
               <div class="form-group">
-                <label class="text-sm">Kode Sub Akun</label>
+                <label>Kode Sub Akun</label>
                 <input type="text" name="sub_akun[kode_sub_akun]"
-                  class="form-control form-control-sm @error('sub_akun.kode_sub_akun') is-invalid @enderror"
+                  class="form-control @error('sub_akun.kode_sub_akun') is-invalid @enderror"
                   value="{{ old('sub_akun.kode_sub_akun', $sub->kode_sub_akun ?? '') }}">
                 @error('sub_akun.kode_sub_akun')
                   <x-input-validation>{{ $message }}</x-input-validation>
@@ -70,9 +68,9 @@
               </div>
 
               <div class="form-group">
-                <label class="text-sm">Nama Sub Akun</label>
+                <label>Nama Sub Akun</label>
                 <input type="text" name="sub_akun[nama_sub_akun]"
-                  class="form-control form-control-sm @error('sub_akun.nama_sub_akun') is-invalid @enderror"
+                  class="form-control @error('sub_akun.nama_sub_akun') is-invalid @enderror"
                   value="{{ old('sub_akun.nama_sub_akun', $sub->nama_sub_akun ?? '') }}">
                 @error('sub_akun.nama_sub_akun')
                   <x-input-validation>{{ $message }}</x-input-validation>
@@ -80,9 +78,9 @@
               </div>
 
               <div class="form-group">
-                <label class="text-sm">Nama Kegiatan Sub Akun</label>
+                <label>Nama Kegiatan Sub Akun</label>
                 <input type="text" name="sub_akun[nama_kegiatan_sub_akun]"
-                  class="form-control form-control-sm @error('sub_akun.nama_kegiatan_sub_akun') is-invalid @enderror"
+                  class="form-control @error('sub_akun.nama_kegiatan_sub_akun') is-invalid @enderror"
                   value="{{ old('sub_akun.nama_kegiatan_sub_akun', $sub->nama_kegiatan_sub_akun ?? '') }}">
                 @error('sub_akun.nama_kegiatan_sub_akun')
                   <x-input-validation>{{ $message }}</x-input-validation>
@@ -117,7 +115,7 @@
                     <div class="row g-2">
                       <div class="col-md-2">
                         <input type="text" name="sub_akun[kegiatan][{{ $i }}][kode_akun_kegiatan]"
-                          class="form-control form-control-sm @error('sub_akun.kegiatan.' . $i . '.kode_akun_kegiatan') is-invalid @enderror"
+                          class="form-control @error('sub_akun.kegiatan.' . $i . '.kode_akun_kegiatan') is-invalid @enderror"
                           placeholder="Kode Akun"
                           value="{{ old('sub_akun.kegiatan.' . $i . '.kode_akun_kegiatan', $k['kode_akun_kegiatan'] ?? '') }}">
                         @error('sub_akun.kegiatan.' . $i . '.kode_akun_kegiatan')
@@ -127,7 +125,7 @@
 
                       <div class="col-md-6">
                         <input type="text" name="sub_akun[kegiatan][{{ $i }}][nama_kegiatan]"
-                          class="form-control form-control-sm @error('sub_akun.kegiatan.' . $i . '.nama_kegiatan') is-invalid @enderror"
+                          class="form-control @error('sub_akun.kegiatan.' . $i . '.nama_kegiatan') is-invalid @enderror"
                           placeholder="Nama Kegiatan"
                           value="{{ old('sub_akun.kegiatan.' . $i . '.nama_kegiatan', $k['nama_kegiatan'] ?? '') }}">
                         @error('sub_akun.kegiatan.' . $i . '.nama_kegiatan')
@@ -137,7 +135,7 @@
 
                       <div class="col-md-1">
                         <input type="number" name="sub_akun[kegiatan][{{ $i }}][jumlah_sampel]"
-                          class="form-control form-control-sm @error('sub_akun.kegiatan.' . $i . '.jumlah_sampel') is-invalid @enderror"
+                          class="form-control @error('sub_akun.kegiatan.' . $i . '.jumlah_sampel') is-invalid @enderror"
                           placeholder="Jumlah"
                           value="{{ old('sub_akun.kegiatan.' . $i . '.jumlah_sampel', $k['jumlah_sampel'] ?? '') }}">
                         @error('sub_akun.kegiatan.' . $i . '.jumlah_sampel')
@@ -147,7 +145,7 @@
 
                       <div class="col-md-1">
                         <input type="text" name="sub_akun[kegiatan][{{ $i }}][satuan]"
-                          class="form-control form-control-sm @error('sub_akun.kegiatan.' . $i . '.satuan') is-invalid @enderror"
+                          class="form-control @error('sub_akun.kegiatan.' . $i . '.satuan') is-invalid @enderror"
                           placeholder="Satuan"
                           value="{{ old('sub_akun.kegiatan.' . $i . '.satuan', $k['satuan'] ?? '') }}">
                         @error('sub_akun.kegiatan.' . $i . '.satuan')
@@ -159,7 +157,7 @@
                         <input type="text" inputmode="numeric"
                           name="sub_akun[kegiatan][{{ $i }}][harga_satuan]"
                           id="harga_satuan_{{ $i }}"
-                          class="form-control form-control-sm format-rupiah @error('sub_akun.kegiatan.' . $i . '.harga_satuan') is-invalid @enderror"
+                          class="form-control format-rupiah @error('sub_akun.kegiatan.' . $i . '.harga_satuan') is-invalid @enderror"
                           placeholder="Harga"
                           value="{{ old('sub_akun.kegiatan.' . $i . '.harga_satuan', $k['harga_satuan'] ?? '') }}">
                         @error('sub_akun.kegiatan.' . $i . '.harga_satuan')
@@ -180,8 +178,8 @@
           </div>
 
           <div class="mt-3">
-            <a href="{{ route('akun.index') }}" class="btn btn-sm btn-secondary">Kembali</a>
-            <button type="submit" class="btn btn-sm btn-primary">Simpan Perubahan</button>
+            <a href="{{ route('akun.index') }}" class="btn btn-secondary">Kembali</a>
+            <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
           </div>
 
         </form>
@@ -226,11 +224,11 @@
           <button type="button" class="btn btn-danger btn-sm" onclick="this.closest('.kegiatan-item').remove()">Hapus</button>
         </div>
         <div class="row g-2">
-          <div class="col-md-2"><input type="text" name="sub_akun[kegiatan][${kegiatanIndex}][kode_akun_kegiatan]" class="form-control form-control-sm" placeholder="Kode Akun"></div>
-          <div class="col-md-6"><input type="text" name="sub_akun[kegiatan][${kegiatanIndex}][nama_kegiatan]" class="form-control form-control-sm" placeholder="Nama Kegiatan"></div>
-          <div class="col-md-1"><input type="number" name="sub_akun[kegiatan][${kegiatanIndex}][jumlah_sampel]" class="form-control form-control-sm" placeholder="Jumlah"></div>
-          <div class="col-md-1"><input type="text" name="sub_akun[kegiatan][${kegiatanIndex}][satuan]" class="form-control form-control-sm" placeholder="Satuan"></div>
-          <div class="col-md-2"><input type="text" inputmode="numeric" name="sub_akun[kegiatan][${kegiatanIndex}][harga_satuan]" class="form-control form-control-sm format-rupiah" placeholder="Harga"></div>
+          <div class="col-md-2"><input type="text" name="sub_akun[kegiatan][${kegiatanIndex}][kode_akun_kegiatan]" class="form-control" placeholder="Kode Akun"></div>
+          <div class="col-md-6"><input type="text" name="sub_akun[kegiatan][${kegiatanIndex}][nama_kegiatan]" class="form-control" placeholder="Nama Kegiatan"></div>
+          <div class="col-md-1"><input type="number" name="sub_akun[kegiatan][${kegiatanIndex}][jumlah_sampel]" class="form-control" placeholder="Jumlah"></div>
+          <div class="col-md-1"><input type="text" name="sub_akun[kegiatan][${kegiatanIndex}][satuan]" class="form-control" placeholder="Satuan"></div>
+          <div class="col-md-2"><input type="text" inputmode="numeric" name="sub_akun[kegiatan][${kegiatanIndex}][harga_satuan]" class="form-control format-rupiah" placeholder="Harga"></div>
         </div>
       `;
         container.appendChild(div);

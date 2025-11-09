@@ -1,13 +1,11 @@
 @props(['action' => '', 'label' => 'Hapus'])
 
-<!-- Tombol Hapus: kirim action final lewat data-action -->
-<button type="button" class="btn btn-danger btn-xs text-xs" data-toggle="modal" data-target="#confirmDeleteModal"
+<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDeleteModal"
   data-action="{{ $action }}">
   {{ $label }}
 </button>
 
 @once
-  <!-- Modal konfirmasi (render sekali saja di halaman) -->
   <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -25,7 +23,6 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
 
-          <!-- form yang akan di-set action-nya secara dinamis -->
           <form id="confirmDeleteForm" method="POST" style="display:inline;">
             @csrf
             @method('DELETE')
@@ -36,12 +33,11 @@
     </div>
   </div>
 
-  <!-- Script: saat modal dibuka, ambil data-action dari tombol yang klik, set ke form -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       $('#confirmDeleteModal').on('show.bs.modal', function(event) {
-        const button = $(event.relatedTarget); // tombol yang memicu modal
-        const action = button.data('action'); // sudah berisi URL final dari blade (misal /mitra/5)
+        const button = $(event.relatedTarget);
+        const action = button.data('action');
         $('#confirmDeleteForm').attr('action', action);
       });
     });

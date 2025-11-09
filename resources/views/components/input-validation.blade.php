@@ -1,1 +1,3 @@
-<small class="text-xs text-danger d-block mt-1 text-wrap">{{ ucfirst($slot) }}</small>
+<div class="invalid-feedback d-block">
+  {{ ucfirst($slot) }}
+</div>

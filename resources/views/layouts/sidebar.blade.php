@@ -1,33 +1,12 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-2">
-  {{-- Logo --}}
   <a href="{{ route('home') }}" class="brand-link">
     <img src="{{ asset('img/logo_bps.webp') }}" loading="lazy" title="Logo" alt="Logo"
       class="brand-image img-circle" />
     <span class="brand-text font-weight-bold text-md">SIKOMBAT</span>
   </a>
 
-  <!-- Sidebar -->
   <div class="sidebar">
-    <!-- Sidebar Menu -->
-
-    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-      <div class="info">
-        <a href="{{ route('profil.index') }}" class="d-block font-weight-bold text-sm">
-          {{ Auth::user()->nama_lengkap }}
-        </a>
-        <small class="d-block text-medium text-light text-xs">
-          {{ match (Auth::user()->role) {
-              'ketua_tim' => 'Ketua Tim',
-              'umum' => 'Umum',
-              'user' => 'User',
-              'admin' => 'Admin',
-          } }}
-        </small>
-      </div>
-    </div>
-
-
-    <nav class="mt-2 text-sm">
+    <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
         <li class="nav-header text-muted">Utama</li>
@@ -65,7 +44,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="" class="nav-link">
+            <a href="{{ route('mitra.index') }}" class="nav-link {{ request()->routeIs('mitra.*') ? 'active' : '' }}">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                 class="lucide lucide-user-check-icon lucide-user-check nav-icon">
@@ -97,34 +76,10 @@
         @endif
 
         <li class="nav-item">
-          <a href="{{ route('profil.index') }}" class="nav-link {{ request()->routeIs('profil.*') ? 'active' : '' }}">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-              class="lucide lucide-user-round-cog-icon lucide-user-round-cog nav-icon">
-              <path d="m14.305 19.53.923-.382" />
-              <path d="m15.228 16.852-.923-.383" />
-              <path d="m16.852 15.228-.383-.923" />
-              <path d="m16.852 20.772-.383.924" />
-              <path d="m19.148 15.228.383-.923" />
-              <path d="m19.53 21.696-.382-.924" />
-              <path d="M2 21a8 8 0 0 1 10.434-7.62" />
-              <path d="m20.772 16.852.924-.383" />
-              <path d="m20.772 19.148.924.383" />
-              <circle cx="10" cy="8" r="5" />
-              <circle cx="18" cy="18" r="3" />
-            </svg>
-            <p>
-              Profil Anda
-            </p>
-          </a>
-        </li>
-
-
-        <li class="nav-item">
           <a href="{{ route('tambahan.index') }}"
             class="nav-link {{ request()->routeIs('tambahan.*') ? 'active' : '' }}">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
               class="lucide lucide-badge-plus-icon lucide-badge-plus nav-icon">
               <path
                 d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" />

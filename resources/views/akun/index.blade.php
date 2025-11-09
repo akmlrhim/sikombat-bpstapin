@@ -4,16 +4,28 @@
 
     {{-- button  --}}
     <div class="col-12">
-      <a href="{{ route('akun.create') }}" class="btn btn-sm btn-success mb-3">Tambah Akun</a>
+      <a href="{{ route('akun.create') }}" class="btn btn-success mb-3">Tambah Akun</a>
     </div>
 
     {{-- flashdata --}}
     <x-alert />
     <div class="col-12">
       <div class="card">
+
+        <div class="card-header">
+          <h3 class="card-title">Data</h3>
+
+          <div class="card-tools">
+            <div class="input-group input-group-sm" style="width: 210px;">
+              <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+            </div>
+          </div>
+        </div>
+
         <div class="card-body table-responsive p-0">
-          <table class="table table-bordered table-sm text-nowrap text-sm">
-            <thead class="bg-success">
+          <table class="table table-bordered table-sm text-nowrap">
+            <thead>
               <tr>
                 <th>#</th>
                 <th>Kode Akun</th>
@@ -28,14 +40,14 @@
                   <td>{{ $row->kode_akun }}</td>
                   <td>{{ $row->nama_akun }}</td>
                   <td>
-                    <a href="{{ route('akun.detail', $row->uuid) }}" class="btn btn-secondary btn-xs">Detail</a>
-                    <a href="{{ route('akun.edit', $row->uuid) }}" class="btn btn-info btn-xs">Edit</a>
+                    <a href="{{ route('akun.detail', $row->uuid) }}" class="btn btn-secondary btn-sm">Detail</a>
+                    <a href="{{ route('akun.edit', $row->uuid) }}" class="btn btn-info btn-sm">Edit</a>
                     <x-confirm-delete action="{{ route('akun.destroy', $row->id) }}" />
                   </td>
                 </tr>
               @empty
                 <tr>
-                  <td colspan="6" class="text-center text-muted text-sm">Tidak ada data dalam tabel</td>
+                  <td colspan="6" class="text-center text-muted">Tidak ada data dalam tabel</td>
                 </tr>
               @endforelse
             </tbody>
@@ -43,6 +55,7 @@
         </div>
       </div>
     </div>
+
     {{ $akun->links() }}
   </div>
 @endsection

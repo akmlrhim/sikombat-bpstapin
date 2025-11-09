@@ -29,7 +29,7 @@ class UserController extends Controller
             });
         }
 
-        $user = $query->paginate(10)->withQueryString();
+        $user = $query->paginate(10)->onEachSide(1)->withQueryString();
 
         return view('user.index', compact('title', 'user'));
     }
@@ -51,7 +51,7 @@ class UserController extends Controller
     {
         $request->validate([
             'nama_lengkap' => 'required|unique:users,nama_lengkap,except,id',
-            'email' => 'email|required|unique:users,email,except,id',
+            'email' => 'email:dns|required|unique:users,email,except,id',
             'nip' => 'required|numeric|unique:users,nip,except,id',
             'role' => 'required'
         ]);
@@ -89,7 +89,7 @@ class UserController extends Controller
     {
         $request->validate([
             'nama_lengkap' => 'required|unique:users,nama_lengkap,' . $id,
-            'email' => 'email|required|unique:users,email,' . $id,
+            'email' => 'email:dns|required|unique:users,email,' . $id,
             'nip' => 'required|numeric|unique:users,nip,' . $id,
             'role' => 'required'
         ]);

@@ -9,7 +9,7 @@
       {{-- box informasi  --}}
       <div class="alert alert-warning alert-dismissible fade show" role="alert">
         <h4 class="alert-heading">Catatan</h4>
-        <p class="text-sm mb-0">
+        <p class="mb-0">
           Jika ingin mengubah batas honor, perhatikan penulisan nominal.
           <br>Gunakan angka tanpa titik pemisah dan tanpa awalan <strong>Rp</strong>.
           <br><em>Contoh: 500000 (bukan Rp.500.000)</em>
@@ -19,8 +19,8 @@
       <div class="card">
         <!-- /.card-header -->
         <div class="card-body table-responsive p-0">
-          <table class="table table-bordered table-sm text-nowrap text-sm">
-            <thead class="bg-success">
+          <table class="table table-bordered table-sm text-nowrap">
+            <thead>
               <tr>
                 <th>Key</th>
                 <th>Value</th>
@@ -33,12 +33,12 @@
                   <td>{{ $row->key }}</td>
                   <td>{{ $row->value }}</td>
                   <td>
-                    <a href="{{ route('tambahan.edit', $row->uuid) }}" class="btn btn-xs btn-primary">Edit</a>
+                    <a href="{{ route('tambahan.edit', $row->uuid) }}" class="btn btn-sm btn-primary">Edit</a>
                   </td>
                 </tr>
               @empty
                 <tr>
-                  <td colspan="4" class="text-center text-muted text-sm">Tidak ada data dalam tabel</td>
+                  <td colspan="4" class="text-center text-muted ">Tidak ada data dalam tabel</td>
                 </tr>
               @endforelse
             </tbody>

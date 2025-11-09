@@ -7,7 +7,7 @@
 
         <h3 class="text-primary mb-3">Akun Utama</h3>
 
-        <table class="table table-sm text-sm table-bordered mb-4">
+        <table class="table table-sm table-bordered mb-4">
           <tr>
             <th width="25%">Kode Akun</th>
             <td>{{ $akun->kode_akun }}</td>
@@ -32,7 +32,7 @@
 
         @if ($sub)
           <h4 class="text-primary mt-4">Sub Akun</h4>
-          <table class="table text-sm table-sm table-bordered mb-4">
+          <table class="table table-sm table-bordered mb-4">
             <tr>
               <th width="25%">Kode Sub Akun</th>
               <td>{{ $sub->kode_sub_akun }}</td>
@@ -51,8 +51,8 @@
           <h5 class="text-primary mt-3">Daftar Kegiatan</h5>
 
           <div class="table-responsive">
-            <table class="table table-sm text-sm table-bordered">
-              <thead class="table-primary">
+            <table class="table table-sm table-bordered">
+              <thead>
                 <tr>
                   <th width="5%">#</th>
                   <th>Kode Akun Kegiatan</th>
@@ -85,8 +85,8 @@
         @endif
 
         <div class="mt-3">
-          <a href="{{ route('akun.index') }}" class="btn btn-sm btn-secondary">Kembali</a>
-          <a href="{{ route('akun.edit', $akun->uuid) }}" class="btn btn-sm btn-primary">Edit Akun</a>
+          <a href="{{ route('akun.index') }}" class="btn btn-secondary">Kembali</a>
+          <a href="{{ route('akun.edit', $akun->uuid) }}" class="btn btn-primary">Edit Akun</a>
         </div>
 
       </div>

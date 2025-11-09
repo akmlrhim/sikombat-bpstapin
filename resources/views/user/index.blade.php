@@ -4,7 +4,7 @@
 
     {{-- button  --}}
     <div class="col-12">
-      <a href="{{ route('user.create') }}" class="btn btn-sm btn-success mb-3">Tambah user</a>
+      <a href="{{ route('user.create') }}" class="btn btn-success mb-3">Tambah user</a>
     </div>
 
     {{-- flashdata --}}
@@ -18,9 +18,8 @@
 
               {{-- filter role  --}}
               <div class="col-md-3 mb-2">
-                <label for="role" class="text-primary font-weight-bold text-sm">Role</label>
-                <select name="role" id="role" class="form-control form-control-sm text-sm"
-                  onchange="this.form.submit()">
+                <label for="role" class="text-primary font-weight-bold">Role</label>
+                <select name="role" id="role" class="form-control" onchange="this.form.submit()">
                   <option value="">-- Semua Role --</option>
                   <option value="ketua_tim" {{ request('role') == 'ketua_tim' ? 'selected' : '' }}>Ketua Tim</option>
                   <option value="umum" {{ request('role') == 'umum' ? 'selected' : '' }}>Umum</option>
@@ -30,10 +29,9 @@
 
               {{-- search  --}}
               <div class="col-md-4 mb-2">
-                <label for="keyword" class="text-primary font-weight-bold text-sm">Cari Nama / NIP</label>
-                <input type="text" name="keyword" id="keyword" class="form-control form-control-sm"
-                  value="{{ request('keyword') }}" placeholder="Masukkan Nama Lengkap atau NIP" autocomplete="off"
-                  autocomplete="off" />
+                <label for="keyword" class="text-primary font-weight-bold">Cari Nama / NIP</label>
+                <input type="text" name="keyword" id="keyword" class="form-control" value="{{ request('keyword') }}"
+                  placeholder="Masukkan Nama Lengkap atau NIP" autocomplete="off" autocomplete="off" />
               </div>
 
               {{-- button  --}}
@@ -59,8 +57,8 @@
     <div class="col-12">
       <div class="card">
         <div class="card-body table-responsive p-0">
-          <table class="table table-bordered table-sm text-nowrap text-sm">
-            <thead class="bg-success">
+          <table class="table table-bordered table-sm text-nowrap">
+            <thead>
               <tr>
                 <th>#</th>
                 <th>Nama Lengkap</th>
@@ -85,22 +83,25 @@
                     } }}
                   </td>
                   <td>
-                    <a href="{{ route('user.edit', $row->id) }}" class="btn btn-info btn-xs">Edit</a>
+                    <a href="{{ route('user.edit', $row->id) }}" class="btn btn-info btn-sm">Edit</a>
                     <x-confirm-delete action="{{ route('user.destroy', $row->id) }}" />
                   </td>
                 </tr>
               @empty
                 <tr>
-                  <td colspan="6" class="text-center text-muted text-sm">Tidak ada data dalam tabel</td>
+                  <td colspan="6" class="text-center text-muted">Tidak ada data dalam tabel</td>
                 </tr>
               @endforelse
             </tbody>
           </table>
         </div>
 
-        <div class="p-2">
-          {{ $user->links() }}
+        <div class="card-footer clearfix">
+          <ul class="pagination m-0 float-right">
+            {{ $user->links() }}
+          </ul>
         </div>
+
       </div>
     </div>
   </div>

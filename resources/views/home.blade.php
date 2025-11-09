@@ -17,8 +17,8 @@
       <!-- small box -->
       <div class="small-box bg-light">
         <div class="inner">
-          <h2 class="text-danger font-anton">{{ $user }}</h2>
-          <p class="text-danger text-sm">User terdaftar</p>
+          <h2 class="text-danger">{{ $user }}</h2>
+          <p class="text-danger">User terdaftar</p>
         </div>
       </div>
     </div>
@@ -32,11 +32,11 @@
           <div class="d-flex">
             <p class="d-flex flex-column mb-0">
               <span class="text-lg font-weight-bold">{{ $totalVisits }}</span>
-              <span class="text-sm">Pengunjung Web</span>
+              <span>Pengunjung Web</span>
             </p>
             <p class="ml-auto d-flex flex-column text-right">
             <form action="{{ route('home') }}" method="GET">
-              <select name="range" onchange="this.form.submit()" class="custom-select text-sm">
+              <select name="range" onchange="this.form.submit()" class="custom-select">
                 <option value="1" {{ request('range') == 1 ? 'selected' : '' }}>Hari Ini</option>
                 <option value="3" {{ request('range') == 3 ? 'selected' : '' }}>3 Hari Terakhir</option>
                 <option value="7" {{ request('range') == 7 ? 'selected' : '' }}>7 Hari Terakhir</option>

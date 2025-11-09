@@ -154,6 +154,7 @@ return [
     'attributes' => [
         'nms' => 'NMS',
         'mitra_id' => 'Mitra',
+        'jenis_kelamin' => 'Jenis kelamin',
 
         'nip' => 'NIP',
         'current_password' => 'Password saat ini',

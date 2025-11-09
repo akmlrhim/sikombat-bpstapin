@@ -17,9 +17,14 @@
   <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ asset('css/adminlte.min.css') }}">
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap"
+    rel="stylesheet">
+
   <style>
     body {
-      font-family: "Arial", sans-serif;
+      font-family: "Source Sans 3", sans-serif;
     }
   </style>
 </head>
@@ -31,7 +36,6 @@
         <div class="card shadow-lg border-0 rounded-lg overflow-hidden">
           <div class="row no-gutters">
 
-            {{-- left  --}}
             <div class="col-md-6 d-none d-md-block bg-light">
               <div class="h-100 d-flex align-items-center justify-content-center p-4">
                 <img src="{{ asset('img/computer-security-with-login-password-padlock-removebg-preview.png') }}"
@@ -39,12 +43,11 @@
               </div>
             </div>
 
-            {{-- right  --}}
             <div class="col-md-6 bg-white">
               <div class="card-body p-5">
                 <div class="text-center mb-4">
-                  <h3 class="mb-1 font-weight-bold text-primary">Login</h3>
-                  <p class="text-muted text-sm">Silakan masuk untuk melanjutkan</p>
+                  <h2 class="mb-1 font-weight-bold text-primary">Login</h2>
+                  <p class="text-muted">Silakan masuk untuk melanjutkan</p>
                 </div>
 
                 <x-alert />
@@ -53,20 +56,19 @@
                   @csrf
 
                   <div class="form-group mb-3">
-                    <label for="email" class="form-label font-weight-bold text-sm">Email</label>
-                    <input type="email" class="form-control form-control-sm @error('email') is-invalid @enderror"
-                      id="email" name="email" value="{{ old('email') }}" placeholder="Masukkan email anda"
-                      autofocus autocomplete="off">
+                    <label for="email" class="form-label font-weight-bold">Email</label>
+                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
+                      name="email" value="{{ old('email') }}" placeholder="Masukkan email anda" autofocus
+                      autocomplete="off">
                     @error('email')
                       <x-input-validation>{{ $message }}</x-input-validation>
                     @enderror
                   </div>
 
                   <div class="form-group mb-4">
-                    <label for="password" class="form-label font-weight-bold text-sm">Password</label>
+                    <label for="password" class="form-label font-weight-bold">Password</label>
                     <div class="input-group">
-                      <input type="password"
-                        class="form-control form-control-sm @error('password') is-invalid @enderror" id="password"
+                      <input type="password" class="form-control @error('password') is-invalid @enderror" id="password"
                         name="password" placeholder="Masukkan password" autocomplete="off">
 
                       <div class="input-group-append">
@@ -117,7 +119,7 @@
           </div>
         </div>
         <div class="text-center mt-3">
-          <p class="text-muted text-sm">&copy; {{ date('Y') }} SIKOMBAT</p>
+          <p class="text-muted">&copy; {{ date('Y') }} SIKOMBAT</p>
         </div>
       </div>
     </div>
