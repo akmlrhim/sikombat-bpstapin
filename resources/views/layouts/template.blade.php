@@ -15,6 +15,8 @@
   <link rel="icon" href="{{ asset('img/logo_bps.png') }}" type="image/png">
   <link rel="shortcut icon" href="{{ asset('img/logo_bps.ico') }}" type="image/x-icon">
 
+  <link rel="stylesheet" href="{{ asset('select2/select2.bs4.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('select2/select2.min.css') }}">
   <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ asset('css/adminlte.min.css') }}">
 
@@ -55,8 +57,16 @@
   <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
   <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ asset('js/adminlte.min.js') }}"></script>
+  <script src="{{ asset('select2/select2.full.min.js') }}"></script>
+
+  <script>
+    $(function() {
+      $('.select2').select2()
+    })
+  </script>
 
   @yield('scripts')
+
 </body>
 
 </html>

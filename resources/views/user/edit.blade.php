@@ -47,7 +47,7 @@
 
               <div class="form-group">
                 <label for="role">Role/Hak Akses</label>
-                <select name="role" class="form-control @error('role') is-invalid @enderror" id="role">
+                <select name="role" class="custom-select @error('role') is-invalid @enderror" id="role">
                   <option value="" disabled {{ old('role', $user->role) ? '' : 'selected' }}>
                     {{ match ($user->role) {
                         'ketua_tim' => 'Ketua Tim',

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('sub_akun', function (Blueprint $table) {
             $table->id();
+            $table->string('uuid', 128);
             $table->foreignId('id_akun')->constrained('akun')->onDelete('cascade');
             $table->string('kode_sub_akun')->index();
             $table->string('nama_sub_akun')->index();

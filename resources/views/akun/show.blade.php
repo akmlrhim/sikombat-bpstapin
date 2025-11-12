@@ -6,25 +6,26 @@
       <div class="card-body">
 
         <h3 class="text-primary mb-3">Akun Utama</h3>
-
-        <table class="table table-sm table-bordered mb-4">
-          <tr>
-            <th width="25%">Kode Akun</th>
-            <td>{{ $akun->kode_akun }}</td>
-          </tr>
-          <tr>
-            <th>Nama Akun</th>
-            <td>{{ $akun->nama_akun }}</td>
-          </tr>
-          <tr>
-            <th>Pagu Anggaran</th>
-            <td>Rp {{ number_format($akun->pagu_anggaran, 0, ',', '.') }}</td>
-          </tr>
-          <tr>
-            <th>Sisa Anggaran</th>
-            <td>Rp {{ number_format($akun->sisa_anggaran, 0, ',', '.') }}</td>
-          </tr>
-        </table>
+        <div class="table-responsive">
+          <table class="table table-sm table-bordered mb-4 text-nowrap">
+            <tr>
+              <th width="25%">Kode Akun Utama</th>
+              <td>{{ $akun->kode_akun }}</td>
+            </tr>
+            <tr>
+              <th>Nama Akun Utama</th>
+              <td>{{ $akun->nama_akun }}</td>
+            </tr>
+            <tr>
+              <th>Pagu Anggaran</th>
+              <td>Rp {{ number_format($akun->pagu_anggaran, 0, ',', '.') }}</td>
+            </tr>
+            <tr>
+              <th>Sisa Anggaran</th>
+              <td>Rp {{ number_format($akun->sisa_anggaran, 0, ',', '.') }}</td>
+            </tr>
+          </table>
+        </div>
 
         @php
           $sub = $akun->subAkun()->with('kegiatan')->first();
@@ -32,20 +33,22 @@
 
         @if ($sub)
           <h4 class="text-primary mt-4">Sub Akun</h4>
-          <table class="table table-sm table-bordered mb-4">
-            <tr>
-              <th width="25%">Kode Sub Akun</th>
-              <td>{{ $sub->kode_sub_akun }}</td>
-            </tr>
-            <tr>
-              <th>Nama Sub Akun</th>
-              <td>{{ $sub->nama_sub_akun }}</td>
-            </tr>
-            <tr>
-              <th>Nama Kegiatan Sub Akun</th>
-              <td>{{ $sub->nama_kegiatan_sub_akun }}</td>
-            </tr>
-          </table>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered mb-4 text-nowrap">
+              <tr>
+                <th width="25%">Kode Sub Akun</th>
+                <td>{{ $sub->kode_sub_akun }}</td>
+              </tr>
+              <tr>
+                <th>Nama Sub Akun</th>
+                <td>{{ $sub->nama_sub_akun }}</td>
+              </tr>
+              <tr>
+                <th>Nama Kegiatan Sub Akun</th>
+                <td>{{ $sub->nama_kegiatan_sub_akun }}</td>
+              </tr>
+            </table>
+          </div>
 
           {{-- Data Kegiatan --}}
           <h5 class="text-primary mt-3">Daftar Kegiatan</h5>
@@ -53,8 +56,8 @@
           <div class="table-responsive">
             <table class="table table-sm table-bordered">
               <thead>
-                <tr>
-                  <th width="5%">#</th>
+                <tr class="text-nowrap">
+                  <th width="5%"">#</th>
                   <th>Kode Akun Kegiatan</th>
                   <th>Nama Kegiatan</th>
                   <th>Jumlah Sampel</th>
@@ -63,7 +66,7 @@
                   <th>Total Harga</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody class="text-nowrap">
                 @forelse ($sub->kegiatan as $index => $keg)
                   <tr>
                     <td>{{ $index + 1 }}</td>

@@ -7,7 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class SubAkun extends Model
 {
     protected $table = 'sub_akun';
-    protected $fillable = ['uuid', 'kode_sub_akun', 'nama_sub_akun', 'nama_kegiatan_sub_akun'];
+    protected $fillable = [
+        'uuid',
+        'id_akun',
+        'kode_sub_akun',
+        'nama_sub_akun',
+        'nama_kegiatan_sub_akun'
+    ];
 
     public function akun()
     {

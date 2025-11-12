@@ -13,15 +13,9 @@ class HomeController extends Controller
   public function index()
   {
     $title = 'Home';
-    // $mitra = Mitra::count();
-    $user = User::count();
-
     $range = request('range', 7);
-
     $visits = Visit::where('created_at', '>=', now()->subDays($range))->get();
-
     $totalVisits = $visits->count();
-
     $dates = collect();
     for ($i = $range - 1; $i >= 0; $i--) {
       $dates->push(now()->subDays($i)->format('Y-m-d'));
@@ -37,7 +31,6 @@ class HomeController extends Controller
 
     return view('home', compact(
       'title',
-      'user',
       'totalVisits',
       'visitsPerDay',
       'range'

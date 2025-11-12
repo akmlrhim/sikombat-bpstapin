@@ -43,7 +43,7 @@
 
               <div class="form-group">
                 <label for="role">Role/Hak Akses</label>
-                <select name="role" class="form-control @error('role') is-invalid @enderror" id="role">
+                <select name="role" class="custom-select @error('role') is-invalid @enderror" id="role">
                   <option value="" disabled {{ old('role') ? '' : 'selected' }}>-- Pilih Role --</option>
                   <option value="ketua_tim" {{ old('role') == 'ketua_tim' ? 'selected' : '' }}>Ketua Tim</option>
                   <option value="umum" {{ old('role') == 'umum' ? 'selected' : '' }}>Umum</option>

@@ -11,6 +11,6 @@ class Akun extends Model
 
     public function subAkun()
     {
-        return $this->hasOne(SubAkun::class, 'id_akun');
+        return $this->hasMany(SubAkun::class, 'id_akun');
     }
 }

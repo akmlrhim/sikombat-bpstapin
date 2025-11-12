@@ -19,7 +19,7 @@
               {{-- filter role  --}}
               <div class="col-md-3 mb-2">
                 <label for="role" class="text-primary font-weight-bold">Role</label>
-                <select name="role" id="role" class="form-control" onchange="this.form.submit()">
+                <select name="role" id="role" class="custom-select" onchange="this.form.submit()">
                   <option value="">-- Semua Role --</option>
                   <option value="ketua_tim" {{ request('role') == 'ketua_tim' ? 'selected' : '' }}>Ketua Tim</option>
                   <option value="umum" {{ request('role') == 'umum' ? 'selected' : '' }}>Umum</option>
@@ -37,14 +37,7 @@
               {{-- button  --}}
               <div class="col-md-4 mb-2 d-flex align-items-end">
                 <a href="{{ route('user.index') }}" class="btn btn-sm btn-secondary" title="Reset">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="lucide lucide-refresh-cw">
-                    <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
-                    <path d="M21 3v5h-5" />
-                    <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
-                    <path d="M8 16H3v5" />
-                  </svg>
+                  Reset Filter
                 </a>
               </div>
 
@@ -76,11 +69,12 @@
                   <td>{{ $row->email }}</td>
                   <td>{{ $row->nip }}</td>
                   <td>
-                    {{ match ($row->role) {
-                        'ketua_tim' => 'Ketua Tim',
-                        'umum' => 'Umum',
-                        'user' => 'User',
-                    } }}
+                    {!! match ($row->role) {
+                        'ketua_tim' => '<span class="badge badge-primary">Ketua Tim</span>',
+                        'umum' => '<span class="badge badge-success">Umum</span>',
+                        'user' => '<span class="badge badge-info">User</span>',
+                    } !!}
+
                   </td>
                   <td>
                     <a href="{{ route('user.edit', $row->id) }}" class="btn btn-info btn-sm">Edit</a>

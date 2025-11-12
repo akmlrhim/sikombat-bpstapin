@@ -10,7 +10,7 @@
 
       <!-- form start -->
       <div class="card-body">
-        <div class="col-6 mb-3">
+        <div class="col-md-6 mb-3">
           <h5 class="mb-0">Data Pribadi</h5>
           <p class="text-muted">Pastikan informasi anda tetap valid dengan memperbarui data secara berkala.</p>
           <form method="POST" action="{{ route('profil.info') }}">
@@ -53,7 +53,7 @@
         <hr>
 
         {{-- FORM PASSWORD  --}}
-        <div class="col-6 mt-4">
+        <div class="col-md-6 mt-4">
           <h5 class="mb-0">Ubah Password</h5>
           <p class="text-muted">Gunakan kata sandi yang panjang dan acak untuk keamanan optimal.</p>
           <form method="POST" action="{{ route('profil.pwd') }}">

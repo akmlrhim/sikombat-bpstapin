@@ -4,7 +4,7 @@
 
     {{-- button  --}}
     <div class="col-12">
-      <a href="{{ route('akun.create') }}" class="btn btn-success mb-3">Tambah Akun</a>
+      <a href="{{ route('sub-akun.create') }}" class="btn btn-success mb-3">Tambah Sub Akun</a>
     </div>
 
     {{-- flashdata --}}
@@ -20,7 +20,6 @@
           <div class="card-tools">
             <div class="input-group input-group-sm" style="width: 210px;">
               <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
             </div>
           </div>
         </div>
@@ -30,21 +29,22 @@
             <thead>
               <tr>
                 <th>#</th>
-                <th>Kode Akun</th>
-                <th>Nama Akun</th>
+                <th>Kode Akun Utama</th>
+                <th>Kode Sub Akun</th>
+                <th>Nama Sub Akun</th>
                 <th>Aksi</th>
               </tr>
             </thead>
             <tbody>
-              @forelse ($akun as $index => $row)
+              @forelse ($subAkun as $index => $row)
                 <tr>
-                  <td>{{ $index + $akun->firstItem() }}</td>
-                  <td>{{ $row->kode_akun }}</td>
-                  <td>{{ $row->nama_akun }}</td>
+                  <td>{{ $index + $subAkun->firstItem() }}</td>
+                  <td>{{ $row->akun->kode_akun }}</td>
+                  <td>{{ $row->kode_sub_akun }}</td>
+                  <td>{{ $row->nama_sub_akun }}</td>
                   <td>
-                    <a href="{{ route('akun.edit', $row->uuid) }}" class="btn btn-success btn-sm">Lihat Sub Akun</a>
-                    <a href="{{ route('akun.edit', $row->uuid) }}" class="btn btn-info btn-sm">Edit</a>
-                    <x-confirm-delete action="{{ route('akun.destroy', $row->id) }}" />
+                    <a href="{{ route('sub-akun.edit', $row->uuid) }}" class="btn btn-info btn-sm">Edit</a>
+                    <x-confirm-delete action="{{ route('sub-akun.destroy', $row->uuid) }}" />
                   </td>
                 </tr>
               @empty
@@ -58,6 +58,6 @@
       </div>
     </div>
 
-    {{ $akun->links() }}
+    {{ $subAkun->links() }}
   </div>
 @endsection

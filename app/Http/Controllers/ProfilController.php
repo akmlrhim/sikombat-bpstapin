@@ -21,7 +21,7 @@ class ProfilController extends Controller
 
         $request->validate([
             'nama_lengkap' => 'required|unique:users,nama_lengkap,' . $user->id,
-            'email' => 'required|unique:users,email,' . $user->id,
+            'email' => 'required|email:dns|unique:users,email,' . $user->id,
             'nip' => 'required|unique:users,nip,' . $user->id,
         ]);
 

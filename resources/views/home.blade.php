@@ -10,21 +10,6 @@
 @endpush
 
 @section('content')
-  <div class="row">
-
-
-    <div class="col-lg-3 col-6">
-      <!-- small box -->
-      <div class="small-box bg-light">
-        <div class="inner">
-          <h2 class="text-danger">{{ $user }}</h2>
-          <p class="text-danger">User terdaftar</p>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
   <div class="row mt-2">
     <div class="col-12">
       <div class="card">

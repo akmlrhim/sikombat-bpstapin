@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Mitra;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -14,22 +15,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(30)->create();
+        User::factory(30)->create();
 
-        User::factory()->create([
-            'nama_lengkap' => 'Umum',
-            'email' => 'umum@gmail.com',
-            'nip' => fake()->randomNumber(9),
-            'role' => 'umum'
-        ]);
-
-        User::factory()->create([
-            'nama_lengkap' => 'Administrator',
-            'email' => 'akmalrahim376@gmail.com',
-            'nip' => 0,
-            'role' => 'admin',
-            'password' => Hash::make('reduce91')
-        ]);
+        Mitra::factory(100)->create();
 
         $this->call([
             SettingsSeeder::class

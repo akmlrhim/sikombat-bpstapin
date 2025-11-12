@@ -12,7 +12,10 @@ class KontrakController extends Controller
      */
     public function index()
     {
-        //
+        return view('kontrak.index', [
+            'title' => 'Kontrak Mitra',
+            'kontrak' => Kontrak::paginate(10)
+        ]);
     }
 
     /**

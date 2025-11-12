@@ -72,7 +72,7 @@
                         name="password" placeholder="Masukkan password" autocomplete="off">
 
                       <div class="input-group-append">
-                        <button class="btn btn-sm btn-outline-secondary toggle-password" type="button">
+                        <button class="btn btn-sm toggle-password" type="button">
                           <span class="icon-eye-off d-none">
                             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
                               fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
