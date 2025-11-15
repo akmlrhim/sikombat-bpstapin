@@ -40,7 +40,7 @@ class AuthController extends Controller
         }
 
         if (($captcha['score'] ?? 0) < 0.5) {
-            return back()->with('error', 'Aktivitas mencurigakan terdeteksi (skor reCAPTCHA rendah).');
+            return back()->with('error', 'Aktivitas mencurigakan terdeteksi, matikan VPN.');
         }
 
         Auth::login($user);

@@ -1,11 +1,17 @@
 @extends('layouts.template')
 
 @section('content')
+  <x-alert />
+  
   <div class="col-md-12">
+
+    <h4>
+      {{ $akun->nama_akun }} <span class="text-muted">({{ $akun->kode_akun }})</span>
+    </h4>
     <div class="card card-primary">
 
       <div class="card-body">
-        <form method="POST" action="{{ route('sub-akun.store') }}">
+        <form method="POST" action="{{ route('akun.sub-akun.store', $akun->uuid) }}">
           @csrf
 
           <div class="row">
@@ -14,29 +20,11 @@
               <h4 class="text-primary font-weight-bold">Data Sub Akun</h4>
 
               <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label for="id_akun">Kode Akun Utama</label>
-                  <select class="form-control select2" id="id_akun" name="id_akun" style="width: 100%;">
-                    <option value="" disabled {{ old('id_akun') ? '' : 'selected' }}>
-                      -- Silahkan pilih kode akun utama --
-                    </option>
-                    @foreach ($akun as $row)
-                      <option data-kode="{{ $row->kode_akun }}" value="{{ $row->id }}"
-                        {{ old('id_akun') == $row->id ? 'selected' : '' }}>
-                        {{ $row->kode_akun }} - {{ $row->nama_akun }}
-                      </option>
-                    @endforeach
-                  </select>
-                  @error('id_akun')
-                    <x-input-validation>{{ $message }}</x-input-validation>
-                  @enderror
-                </div>
-
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-12">
                   <label for="kode_sub_akun">Kode Sub Akun</label>
                   <input type="text" class="form-control @error('kode_sub_akun') is-invalid @enderror"
                     name="kode_sub_akun" id="kode_sub_akun" placeholder="Contoh. 2901.BMA.001"
-                    value="{{ old('kode_sub_akun') }}" />
+                    value="{{ old('kode_sub_akun', $akun->kode_akun) }}" />
                   @error('kode_sub_akun')
                     <x-input-validation>{{ $message }}</x-input-validation>
                   @enderror
@@ -164,7 +152,7 @@
           </div>
 
           <div class="mt-2">
-            <a href="{{ route('sub-akun.index') }}">
+            <a href="{{ route('akun.sub-akun', $akun->uuid) }}">
               <button type="button" class="btn btn-secondary">Kembali</button>
             </a>
             <button type="submit" class="btn btn-primary">Simpan data</button>

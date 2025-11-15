@@ -43,6 +43,7 @@
                   <td>{{ $row->kode_sub_akun }}</td>
                   <td>{{ $row->nama_sub_akun }}</td>
                   <td>
+                    <a href="{{ route('sub-akun.show', $row->uuid) }}" class="btn btn-success btn-sm">Detail</a>
                     <a href="{{ route('sub-akun.edit', $row->uuid) }}" class="btn btn-info btn-sm">Edit</a>
                     <x-confirm-delete action="{{ route('sub-akun.destroy', $row->uuid) }}" />
                   </td>

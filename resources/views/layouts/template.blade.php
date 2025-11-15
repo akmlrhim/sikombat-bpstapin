@@ -59,12 +59,6 @@
   <script src="{{ asset('js/adminlte.min.js') }}"></script>
   <script src="{{ asset('select2/select2.full.min.js') }}"></script>
 
-  <script>
-    $(function() {
-      $('.select2').select2()
-    })
-  </script>
-
   @yield('scripts')
 
 </body>

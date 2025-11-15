@@ -67,10 +67,6 @@ class AkunController extends Controller
   }
 
   /**
-   * Display the specified resource.
-   */
-
-  /**
    * Show the form for editing the specified resource.
    */
   public function edit(string $uuid)
@@ -127,8 +123,6 @@ class AkunController extends Controller
     }
   }
 
-
-
   /**
    * Remove the specified resource from storage.
    */
@@ -145,5 +139,13 @@ class AkunController extends Controller
       DB::rollBack();
       return back()->with('error', 'Terjadi kesalahan.');
     }
+  }
+
+  public function subAkun($uuid)
+  {
+    return view('akun.sub-akun', [
+      'title' => 'Sub Akun',
+      'akun' => Akun::with('subAkun')->where('uuid', $uuid)->first()
+    ]);
   }
 }

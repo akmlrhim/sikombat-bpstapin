@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AkunController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HelperController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KontrakController;
 use App\Http\Controllers\MitraController;
@@ -37,14 +38,15 @@ Route::middleware('throttle:60,1')->group(function () {
 			Route::get('{akun}/edit', 'edit')->name('edit');
 			Route::put('{akun}', 'update')->name('update');
 			Route::delete('{akun}', 'destroy')->name('destroy');
+			Route::get('{akun}/sub-akun', 'subAkun')->name('sub-akun');
 		});
 
-		// subakun route 
-		Route::prefix('sub-akun')->name('sub-akun.')->controller(SubAkunController::class)->group(function () {
-			Route::get('/', 'index')->name('index');
+		// sub akun route 
+		Route::prefix('akun/{akun:uuid}/sub-akun')->name('akun.sub-akun.')->controller(SubAkunController::class)->group(function () {
 			Route::get('create', 'create')->name('create');
 			Route::post('', 'store')->name('store');
 			Route::get('{sub_akun}/edit', 'edit')->name('edit');
+			Route::get('{sub_akun}/detail', 'show')->name('show');
 			Route::put('{sub_akun}', 'update')->name('update');
 			Route::delete('{sub_akun}', 'destroy')->name('destroy');
 		});
@@ -83,13 +85,13 @@ Route::middleware('throttle:60,1')->group(function () {
 
 		// tambahan route 
 		Route::resource('tambahan', SettingsController::class)->except(['create', 'store']);
+
+		// stats pengunjung web route 
+		Route::get('pengunjung-web', function () {
+			$title = 'Pengunjung Web';
+			$visitor = Visit::with('users')->paginate(10);
+
+			return view('visit', compact('visitor', 'title'));
+		})->name('visit')->middleware('role:admin');
 	});
-
-	// stats pengunjung web route 
-	Route::get('pengunjung-web', function () {
-		$title = 'Pengunjung Web';
-		$visitor = Visit::with('users')->paginate(10);
-
-		return view('visit', compact('visitor', 'title'));
-	})->name('visit')->middleware('role:admin');
 });

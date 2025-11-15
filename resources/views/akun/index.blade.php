@@ -42,7 +42,7 @@
                   <td>{{ $row->kode_akun }}</td>
                   <td>{{ $row->nama_akun }}</td>
                   <td>
-                    <a href="{{ route('akun.edit', $row->uuid) }}" class="btn btn-success btn-sm">Lihat Sub Akun</a>
+                    <a href="{{ route('akun.sub-akun', $row->uuid) }}" class="btn btn-success btn-sm">Lihat Sub Akun</a>
                     <a href="{{ route('akun.edit', $row->uuid) }}" class="btn btn-info btn-sm">Edit</a>
                     <x-confirm-delete action="{{ route('akun.destroy', $row->id) }}" />
                   </td>

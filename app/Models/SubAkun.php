@@ -15,6 +15,11 @@ class SubAkun extends Model
         'nama_kegiatan_sub_akun'
     ];
 
+    public function getRouteKeyName()
+    {
+        return 'uuid';
+    }
+
     public function akun()
     {
         return $this->belongsTo(Akun::class, 'id_akun');

@@ -13,7 +13,7 @@
 
         <li class="nav-item">
           <a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
               class="lucide lucide-layout-dashboard-icon lucide-layout-dashboard nav-icon">
               <rect width="7" height="9" x="3" y="3" rx="1" />
@@ -30,7 +30,7 @@
         @if (Auth::user()->role == 'ketua_tim' || Auth::user()->role == 'umum')
           <li class="nav-item">
             <a href="{{ route('mitra.index') }}" class="nav-link {{ request()->routeIs('mitra.*') ? 'active' : '' }}">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                 class="lucide lucide-user-check-icon lucide-user-check nav-icon">
                 <path d="m16 11 2 2 4-4" />
@@ -43,38 +43,23 @@
 
           <li class="nav-item">
             <a href="{{ route('akun.index') }}" class="nav-link {{ request()->routeIs('akun.*') ? 'active' : '' }}">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                class="lucide lucide-square-icon lucide-square nav-icon">
-                <rect width="18" height="18" x="3" y="3" rx="2" />
+                class="lucide lucide-database-zap-icon lucide-database-zap nav-icon">
+                <ellipse cx="12" cy="5" rx="9" ry="3" />
+                <path d="M3 5V19A9 3 0 0 0 15 21.84" />
+                <path d="M21 5V8" />
+                <path d="M21 12L18 17H22L19 22" />
+                <path d="M3 12A9 3 0 0 0 14.59 14.87" />
               </svg>
-              <p>Akun</p>
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a href="{{ route('sub-akun.index') }}"
-              class="nav-link {{ request()->routeIs('sub-akun.*') ? 'active' : '' }}">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                class="lucide lucide-squares-subtract-icon lucide-squares-subtract nav-icon">
-                <path d="M10 22a2 2 0 0 1-2-2" />
-                <path d="M16 22h-2" />
-                <path
-                  d="M16 4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-5a2 2 0 0 1 2-2h5a1 1 0 0 0 1-1z" />
-                <path d="M20 8a2 2 0 0 1 2 2" />
-                <path d="M22 14v2" />
-                <path d="M22 20a2 2 0 0 1-2 2" />
-              </svg>
-              <p>Sub Akun</p>
+              <p>Akun </p>
             </a>
           </li>
         @endif
 
         <li class="nav-item">
-          <a href="{{ route('kontrak.index') }}"
-            class="nav-link {{ request()->routeIs('kontak.*') ? 'active' : '' }}">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          <a href="{{ route('kontrak.index') }}" class="nav-link {{ request()->routeIs('kontrak.*') ? 'active' : '' }}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
               class="lucide lucide-receipt-text-icon lucide-receipt-text nav-icon">
               <path d="M13 16H8" />
@@ -92,9 +77,9 @@
         @if (Auth::user()->role == 'ketua_tim' || Auth::user()->role == 'umum' || Auth::user()->role == 'admin')
           <li class="nav-item">
             <a href="{{ route('user.index') }}" class="nav-link {{ request()->routeIs('user.*') ? 'active' : '' }}">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" class="lucide lucide-users-icon lucide-users nav-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-users-icon lucide-users nav-icon">
                 <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
                 <path d="M16 3.128a4 4 0 0 1 0 7.744" />
                 <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
@@ -108,7 +93,7 @@
         <li class="nav-item">
           <a href="{{ route('tambahan.index') }}"
             class="nav-link {{ request()->routeIs('tambahan.*') ? 'active' : '' }}">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
               fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
               class="lucide lucide-badge-plus-icon lucide-badge-plus nav-icon">
               <path
@@ -125,7 +110,7 @@
         @if (Auth::user()->role == 'admin')
           <li class="nav-item">
             <a href="{{ route('visit') }}" class="nav-link {{ request()->routeIs('visit.*') ? 'active' : '' }}">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                 stroke-linejoin="round" class="lucide lucide-activity-icon lucide-activity nav-icon">
                 <path
@@ -141,7 +126,7 @@
         <li class="nav-item">
           <a href="#" class="nav-link"
             onclick="event.preventDefault(); document.getElementById('logout').submit();">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
               fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
               class="lucide lucide-log-out-icon lucide-log-out nav-icon text-danger">
               <path d="m16 17 5-5-5-5" />

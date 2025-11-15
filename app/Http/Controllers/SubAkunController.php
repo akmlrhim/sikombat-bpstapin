@@ -25,18 +25,18 @@ class SubAkunController extends Controller
   /**
    * Show the form for creating a new resource.
    */
-  public function create()
+  public function create(Akun $akun)
   {
     return view('sub-akun.create', [
       'title' => 'Tambah Sub Akun',
-      'akun' => Akun::get()
+      'akun' => $akun
     ]);
   }
 
   /**
    * Store a newly created resource in storage.
    */
-  public function store(Request $request)
+  public function store(Request $request, Akun $akun)
   {
     $cleaned = $request->all();
 
@@ -50,7 +50,6 @@ class SubAkunController extends Controller
     }
 
     $validated = validator($cleaned, [
-      'id_akun' => 'required',
       'kode_sub_akun' => 'required|unique:sub_akun,kode_sub_akun',
       'nama_sub_akun' => 'required',
       'nama_kegiatan_sub_akun' => 'required',
@@ -67,7 +66,7 @@ class SubAkunController extends Controller
 
       $subAkun = SubAkun::create([
         'uuid' => Str::uuid(),
-        'id_akun' => $validated['id_akun'],
+        'id_akun' => $akun->id,
         'kode_sub_akun' => $validated['kode_sub_akun'],
         'nama_sub_akun' => $validated['nama_sub_akun'],
         'nama_kegiatan_sub_akun' => $validated['nama_kegiatan_sub_akun']
@@ -88,8 +87,19 @@ class SubAkunController extends Controller
         ]);
       }
 
+      // hitung total harga semua kegiatan 
+      $totalKegiatan = $subAkun->kegiatan()->sum('total_harga');
+
+      if ($akun->sisa_anggaran < $totalKegiatan) {
+        DB::rollBack();
+        return back()->with('error', 'Sisa anggaran tidak mencukupi.')->withInput();
+      }
+
+      // perbarui sisa anggaran bdsrkn pengurangan total harga 
+      $akun->update(['sisa_anggaran' => $akun->sisa_anggaran - $totalKegiatan]);
+
       DB::commit();
-      return redirect()->route('sub-akun.index')->with('success', 'Sub Akun dan kegiatan berhasil disimpan.');
+      return redirect()->route('akun.sub-akun', $akun->uuid)->with('success', 'Sub Akun dan kegiatan berhasil disimpan.');
     } catch (\Exception $e) {
       DB::rollBack();
       return back()->with('error', 'Terjadi kesalahan.');
@@ -99,31 +109,34 @@ class SubAkunController extends Controller
   /**
    * Display the specified resource.
    */
-  public function show(string $uuid)
+  public function show(Akun $akun, SubAkun $subAkun)
   {
-    //
+    $subAkun->load('kegiatan');
+
+    return view('sub-akun.show', [
+      'title' => 'Detail Sub Akun',
+      'akun' => $akun,
+      'subAkun' => $subAkun
+    ]);
   }
 
   /**
    * Show the form for editing the specified resource.
    */
-  public function edit(string $uuid)
+  public function edit(Akun $akun, SubAkun $subAkun)
   {
     return view('sub-akun.edit', [
       'title' => 'Edit Sub Akun',
-      'akun' => Akun::all(),
-      'subAkun' => SubAkun::with('kegiatan')->where('uuid', $uuid)->firstOrFail(),
+      'akun' => $akun,
+      'subAkun' => $subAkun
     ]);
   }
-
 
   /**
    * Update the specified resource in storage.
    */
-  public function update(Request $request, string $uuid)
+  public function update(Request $request, Akun $akun, SubAkun $subAkun)
   {
-    $subAkun = SubAkun::where('uuid', $uuid)->firstOrFail();
-
     if ($request->has('kegiatan')) {
       $kegiatan = collect($request->kegiatan)->map(function ($item) {
         $item['harga_satuan'] = preg_replace('/[^\d]/', '', $item['harga_satuan'] ?? '');
@@ -134,7 +147,6 @@ class SubAkunController extends Controller
     }
 
     $validated = $request->validate([
-      'id_akun' => 'required',
       'kode_sub_akun' => ['required', Rule::unique('sub_akun', 'kode_sub_akun')->ignore($subAkun->id)],
       'nama_sub_akun' => 'required',
       'nama_kegiatan_sub_akun' => 'required',
@@ -149,13 +161,17 @@ class SubAkunController extends Controller
     try {
       DB::beginTransaction();
 
+      // ambil total kegiatan lama 
+      $totalKegiatanLama = $subAkun->kegiatan()->sum('total_harga');
+
       $subAkun->update([
-        'id_akun' => $validated['id_akun'],
+        'id_akun' => $akun->id,
         'kode_sub_akun' => $validated['kode_sub_akun'],
         'nama_sub_akun' => $validated['nama_sub_akun'],
         'nama_kegiatan_sub_akun' => $validated['nama_kegiatan_sub_akun'],
       ]);
 
+      // hapus kegiatan lama terlebih dahulu 
       $subAkun->kegiatan()->delete();
 
       foreach ($validated['kegiatan'] as $k) {
@@ -172,8 +188,20 @@ class SubAkunController extends Controller
         ]);
       }
 
+      // hitung total kegiatan harga semua kegiatan 
+      $totalKegiatanBaru = $subAkun->kegiatan()->sum('total_harga');
+      $selisih = $totalKegiatanBaru - $totalKegiatanLama; //hitung selisih
+
+      if ($akun->sisa_anggaran < $selisih) {
+        DB::rollBack();
+        return redirect()->back()->with('error', 'Sisa anggaran tidak mencukupi.')->withInput();
+      }
+
+      // perbarui bdsrkn selisih total harga baru - lama 
+      $akun->update(['sisa_anggaran' => $akun->sisa_anggaran - $selisih]);
+
       DB::commit();
-      return redirect()->route('sub-akun.index')->with('success', 'Data Sub Akun berhasil diperbarui.');
+      return redirect()->route('akun.sub-akun', $akun->uuid)->with('success', 'Data Sub Akun berhasil diperbarui.');
     } catch (\Throwable $e) {
       DB::rollBack();
       return back()->with('error', 'Terjadi kesalahan.');
@@ -183,14 +211,17 @@ class SubAkunController extends Controller
   /**
    * Remove the specified resource from storage.
    */
-  public function destroy(string $uuid)
+  public function destroy(Akun $akun, SubAkun $subAkun)
   {
     try {
       DB::beginTransaction();
+      $totalKegiatan = $subAkun->kegiatan()->sum('total_harga');
 
-      SubAkun::where('uuid', $uuid)->firstOrFail()->delete();
+      $akun->update(['sisa_anggaran' => $akun->sisa_anggaran + $totalKegiatan]);
+
+      $subAkun->delete();
       DB::commit();
-      return redirect()->route('sub-akun.index')->with('success', 'Data Sub Akun berhasil dihapus.');
+      return redirect()->route('akun.sub-akun', $akun->uuid)->with('success', 'Data Sub Akun berhasil dihapus.');
     } catch (\Exception $e) {
       DB::rollBack();
       return back()->with('error', 'Terjadi kesalahan.');
