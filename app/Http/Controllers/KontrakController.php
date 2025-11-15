@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Akun;
+use App\Models\Kegiatan;
 use App\Models\Kontrak;
 use App\Models\Mitra;
+use App\Models\SubAkun;
 use Illuminate\Http\Request;
 
 class KontrakController extends Controller
@@ -26,7 +29,10 @@ class KontrakController extends Controller
   {
     return view('kontrak.create', [
       'title' => 'Tambah Kontrak',
-      'mitra' => Mitra::get()
+      'mitra' => Mitra::get(),
+      'akun' => Akun::get(),
+      'subAkun' => SubAkun::get(),
+      'kegiatan' => Kegiatan::get()
     ]);
   }
 
@@ -35,7 +41,19 @@ class KontrakController extends Controller
    */
   public function store(Request $request)
   {
-    //
+    $request->validate([
+      // validasi data kontrak 
+      'mitra_id' => 'required',
+      'periode' => 'required',
+      'tanggal_kontrak' => 'required',
+      'tanggal_bast' => 'required',
+      'tanggal_surat' => 'required',
+      'tanggal_mulai' => 'required',
+      'tanggal_berakhir' => 'required',
+      'keterangan' => 'nullable'
+
+      // validasi detail kegiatan kontrak 
+    ]);
   }
 
   /**

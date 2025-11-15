@@ -77,7 +77,7 @@
             </tbody>
 
             @if ($subAkun->kegiatan->count() > 0)
-              <tfoot class="bg-secondary text-nowrap">
+              <tfoot class="text-nowrap">
                 <tr>
                   <th colspan="5" class="text-right">Jumlah</th>
                   <th>
