@@ -7,9 +7,6 @@
       <a href="{{ route('kontrak.create') }}" class="btn btn-success mb-3">Tambah kontrak</a>
     </div>
 
-    {{-- flashdata --}}
-    <x-alert />
-
     <div class="col-12">
       <div class="card">
         <div class="card-header">
@@ -51,8 +48,8 @@
                   <td>Rp {{ number_format($row->total_honor, 0, ',', '.') }}</td>
                   <td>{{ $row->periode->translatedFormat('F Y') }}</td>
                   <td>
-                    <a href="{{ route('kontrak.show', $row->uuid) }}" class="btn btn-warning btn-sm">Detail</a>
-                    <a href="{{ route('kontrak.edit', $row->uuid) }}" class="btn btn-info btn-sm">Edit</a>
+                    <a href="{{ route('kontrak.show', $row->uuid) }}" class="btn btn-info btn-sm">Detail</a>
+                    <a href="{{ route('kontrak.edit', $row->uuid) }}" class="btn btn-warning btn-sm">Edit</a>
                     <x-confirm-delete action="{{ route('kontrak.destroy', $row->uuid) }}" />
                   </td>
                 </tr>
@@ -63,17 +60,12 @@
               @endforelse
             </tbody>
           </table>
-
         </div>
+      </div>
 
-        <div class="card-footer clearfix">
-          <ul class="pagination m-0 float-right">
-            {{ $kontrak->links() }}
-          </ul>
-        </div>
-
+      <div class="d-flex justify-content-center align-items-center text-sm">
+        {{ $kontrak->links() }}
       </div>
     </div>
-
   </div>
 @endsection

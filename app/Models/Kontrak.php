@@ -13,6 +13,7 @@ class Kontrak extends Model
 		'nomor_kontrak',
 		'id_mitra',
 		'periode',
+		'sebagai',
 		'tanggal_kontrak',
 		'tanggal_bast',
 		'tanggal_surat',

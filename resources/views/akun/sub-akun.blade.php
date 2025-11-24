@@ -4,13 +4,11 @@
   <div class="row">
 
     <div class="mb-3 col-12">
-      <a href="{{ route('akun.index') }}" class="btn btn-secondary">Kembali</a>
-      <a href="{{ route('akun.sub-akun.create', $akun->uuid) }}" class="btn btn-primary">
-        Buat Sub Akun
+      <a href="{{ route('akun.index') }}" class="btn btn-secondary">&laquo; Kembali</a>
+      <a href="{{ route('akun.sub-akun.create', $akun->uuid) }}" class="btn btn-success">
+        &plus; Buat Sub Akun
       </a>
     </div>
-
-    <x-alert />
 
     <div class="col-md-12">
 

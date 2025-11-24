@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class SubAkunController extends Controller
 {
@@ -98,10 +99,12 @@ class SubAkunController extends Controller
 			$akun->update(['sisa_anggaran' => $akun->sisa_anggaran - $totalKegiatan]);
 
 			DB::commit();
-			return redirect()->route('akun.sub-akun', $akun->uuid)->with('success', 'Sub Akun dan kegiatan berhasil disimpan.');
+			Alert::success('Berhasil', 'Sub Akun berhasil dibuat.');
+			return redirect()->route('akun.sub-akun', $akun->uuid);
 		} catch (\Exception $e) {
 			DB::rollBack();
-			return back()->with('error', 'Terjadi kesalahan.');
+			Alert::error('Error', 'Terjadi kesalahan.');
+			return back()->withInput();
 		}
 	}
 
@@ -200,10 +203,12 @@ class SubAkunController extends Controller
 			$akun->update(['sisa_anggaran' => $akun->sisa_anggaran - $selisih]);
 
 			DB::commit();
-			return redirect()->route('akun.sub-akun', $akun->uuid)->with('success', 'Data Sub Akun berhasil diperbarui.');
+			Alert::success('Berhasil', 'Sub Akun berhasil diperbarui.');
+			return redirect()->route('akun.sub-akun', $akun->uuid);
 		} catch (\Throwable $e) {
 			DB::rollBack();
-			return back()->with('error', 'Terjadi kesalahan.');
+			Alert::error('Error', 'Terjadi kesalahan.');
+			return back()->withInput();
 		}
 	}
 
@@ -217,13 +222,15 @@ class SubAkunController extends Controller
 			$totalKegiatan = $subAkun->kegiatan()->sum('total_harga');
 
 			$akun->update(['sisa_anggaran' => $akun->sisa_anggaran + $totalKegiatan]);
-
 			$subAkun->delete();
+
 			DB::commit();
-			return redirect()->route('akun.sub-akun', $akun->uuid)->with('success', 'Data Sub Akun berhasil dihapus.');
+			Alert::success('Berhasil', 'Sub Akun berhasil dihapus.');
+			return redirect()->route('akun.sub-akun', $akun->uuid);
 		} catch (\Exception $e) {
 			DB::rollBack();
-			return back()->with('error', 'Terjadi kesalahan.');
+			Alert::error('Error', 'Terjadi kesalahan.');
+			return back()->withInput();
 		}
 	}
 }

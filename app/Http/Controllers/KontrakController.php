@@ -7,10 +7,13 @@ use App\Models\DetailKontrak;
 use App\Models\Kegiatan;
 use App\Models\Kontrak;
 use App\Models\Mitra;
+use App\Models\Settings;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class KontrakController extends Controller
 {
@@ -44,8 +47,17 @@ class KontrakController extends Controller
 	{
 		$request->validate([
 			// validasi data kontrak 
-			'id_mitra' => 'required',
+			'id_mitra' => [
+				'required',
+				Rule::unique('kontrak')
+					->where(function ($query) use ($request) {
+						$periode = $request->periode;
+						return $query->whereMonth('periode', date('m', strtotime($periode)))
+							->whereYear('periode', date('Y', strtotime($periode)));
+					})
+			],
 			'periode' => 'required',
+			'sebagai' => 'required',
 			'tanggal_bast' => 'required|date',
 			'tanggal_surat' => 'required|date',
 			'tanggal_kontrak' => 'required|date',
@@ -92,6 +104,7 @@ class KontrakController extends Controller
 				'nomor_kontrak' => $nextNum,
 				'id_mitra' => $request->id_mitra,
 				'periode' => $request->periode,
+				'sebagai' => $request->sebagai,
 				'tanggal_kontrak' => $request->tanggal_kontrak,
 				'tanggal_bast' => $request->tanggal_bast,
 				'tanggal_surat' => $request->tanggal_surat,
@@ -118,6 +131,14 @@ class KontrakController extends Controller
 					'jumlah_dokumen' => $d['jumlah_dokumen'],
 					'total_honor' => $totalHonorPerKegiatan
 				]);
+			}
+
+			$batasHonor = (int) Settings::where('key', 'batas_honor')->value('value');
+
+			if ($totalHonorKontrak > $batasHonor) {
+				DB::rollBack();
+				Alert::warning('Pemberitahuan', 'Total Honor tidak boleh melebihi Rp ' . number_format($batasHonor, 0, ',', '.'));
+				return back()->withInput();
 			}
 
 			$kontrak->update(['total_honor' => $totalHonorKontrak]);
@@ -165,7 +186,15 @@ class KontrakController extends Controller
 
 		$request->validate([
 			// validasi data kontrak 
-			'id_mitra' => 'required',
+			'id_mitra' => [
+				'required',
+				Rule::unique('kontrak')->ignore($kontrak->id)
+					->where(function ($query) use ($request) {
+						$periode = $request->periode;
+						return $query->whereMonth('periode', date('m', strtotime($periode)))
+							->whereYear('periode', date('Y', strtotime($periode)));
+					})
+			],
 			'periode' => 'required',
 			'tanggal_bast' => 'required|date',
 			'tanggal_surat' => 'required|date',
@@ -226,11 +255,11 @@ class KontrakController extends Controller
 				]);
 			}
 
-			if ($request->jumlah_dokumen > $request->jumlah_target_dokumen) {
+			$batasHonor = Settings::where('key', 'batas_honor')->value('value');
+			if ($totalHonor > $batasHonor) {
 				DB::rollBack();
-				return back()->withErrors(
-					['jumlah_dokumen' => 'Jumlah dokumen tidak boleh melebihi target.']
-				)->withInput();
+				Alert::warning('Pemberitahuan', 'Total honor tidak boleh melebihi Rp ' . number_format($batasHonor, 0, ',', '.'));
+				return back()->withInput();
 			}
 
 			$kontrak->update(['total_honor' => $totalHonor]);
@@ -259,4 +288,33 @@ class KontrakController extends Controller
 			return back()->with('error', 'Terjadi kesalahan.');
 		}
 	}
+
+	public function fileKontrak(string $uuid)
+	{
+		$kepalaBps = Settings::where('key', 'kepala_bps_tapin')->value('value');
+		$pjbPembuatKomit = Settings::where('key', 'pejabat_pembuat_komitmen')->value('value');
+
+		$kontrak = Kontrak::with(
+			['mitra', 'detail', 'detail.akun', 'detail.subAkun', 'detail.kegiatan']
+		)->where('uuid', $uuid)->firstOrFail();
+
+		$pdf = Pdf::loadView('kontrak.file-kontrak', compact('kepalaBps', 'pjbPembuatKomit', 'kontrak'))->setPaper('A4', 'potrait');
+
+		$pdf->output();
+		$dompdf = $pdf->getDomPDF();
+		$canvas = $dompdf->getCanvas();
+
+		$canvas->page_text(
+			280, //posisi x
+			20, //posisi y
+			"- {PAGE_NUM} -", //nomor halaman
+			null, //font default
+			12, //font size 12
+			[0, 0, 0] //warna hitam
+		);
+
+		return $pdf->stream('File Kontrak-' . time() . '.pdf');
+	}
+
+	public function report(string $uuid) {}
 }

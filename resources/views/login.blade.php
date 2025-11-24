@@ -17,15 +17,15 @@
   <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ asset('css/adminlte.min.css') }}">
 
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap"
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
     rel="stylesheet">
 
   <style>
     body {
-      font-family: "Source Sans 3", sans-serif
+      font-family: "Lato", sans-serif;
     }
   </style>
 </head>
@@ -42,8 +42,6 @@
             <h2 class="mb-1 font-weight-bold text-primary">LOGIN</h2>
             <p class="text-muted">Silakan masuk untuk melanjutkan</p>
           </div>
-
-          <x-alert />
 
           <form method="POST" action="{{ route('login') }}" id="login-form">
             @csrf

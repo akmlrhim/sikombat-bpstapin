@@ -7,54 +7,59 @@ use App\Services\ReCaptchaServices;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AuthController extends Controller
 {
-    public function login(Request $request)
-    {
-        $request->validate([
-            'email'    => 'required|email',
-            'password' => 'required|string|min:6',
-            'g-recaptcha-response' => 'required',
-        ]);
+	public function login(Request $request)
+	{
+		$request->validate([
+			'email'    => 'required|email',
+			'password' => 'required|string|min:6',
+			'g-recaptcha-response' => 'required',
+		]);
 
-        // cek apakah email ada
-        $user = User::where('email', $request->email)->first();
+		// cek apakah email ada
+		$user = User::where('email', $request->email)->first();
 
-        if (!$user) {
-            return back()->withErrors([
-                'email' => 'Email tidak terdaftar.',
-            ])->onlyInput('email');
-        }
+		if (!$user) {
+			return back()->withErrors([
+				'email' => 'Email tidak terdaftar.',
+			])->onlyInput('email');
+		}
 
-        if (!Hash::check($request->password, $user->password)) {
-            return back()->withErrors([
-                'password' => 'Password salah.',
-            ])->onlyInput('email');
-        }
+		if (!Hash::check($request->password, $user->password)) {
+			return back()->withErrors([
+				'password' => 'Password salah.',
+			])->onlyInput('email');
+		}
 
-        $captcha = ReCaptchaServices::verify($request->input('g-recaptcha-response'));
+		$captcha = ReCaptchaServices::verify($request->input('g-recaptcha-response'));
 
-        if (!($captcha['success'] ?? false)) {
-            return back()->with('error', 'Verifikasi ReCaptcha gagal, coba lagi.');
-        }
+		if (!($captcha['success'] ?? false)) {
+			Alert::info('Info', 'Verifikasi ReCaptcha gagal, coba lagi.');
+			return back()->withInput();
+		}
 
-        if (($captcha['score'] ?? 0) < 0.5) {
-            return back()->with('error', 'Aktivitas mencurigakan terdeteksi, matikan VPN.');
-        }
+		if (($captcha['score'] ?? 0) < 0.5) {
+			Alert::info('Info', 'Aktivitas mencurigaka terdeteksi, matikan VPN.');
+			return back()->withInput();
+		}
 
-        Auth::login($user);
-        $request->session()->regenerate();
+		Auth::login($user);
+		$request->session()->regenerate();
 
-        return redirect()->intended('/home');
-    }
+		Alert::info('Info', 'Anda telah login.');
+		return redirect()->intended('/home');
+	}
 
 
-    public function logout(Request $request)
-    {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return redirect('/');
-    }
+	public function logout(Request $request)
+	{
+		Auth::logout();
+		$request->session()->invalidate();
+		$request->session()->regenerateToken();
+		Alert::info('Info', 'Anda telah logout.');
+		return redirect('/');
+	}
 }

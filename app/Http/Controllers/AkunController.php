@@ -6,6 +6,7 @@ use App\Models\Akun;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AkunController extends Controller
 {
@@ -44,7 +45,6 @@ class AkunController extends Controller
 			'kode_akun' => 'required|unique:akun,kode_akun',
 			'nama_akun' => 'required',
 			'pagu_anggaran' => 'required|numeric',
-
 		]);
 
 		try {
@@ -59,10 +59,12 @@ class AkunController extends Controller
 			]);
 
 			DB::commit();
-			return redirect()->route('akun.index')->with('success', 'Akun berhasil disimpan.');
+			Alert::success('Berhasil', 'Akun berhasil disimpan.');
+			return redirect()->route('akun.index');
 		} catch (\Exception $e) {
 			DB::rollBack();
-			return back()->with('error', 'Terjadi kesalahan.');
+			Alert::error('Error', 'Terjadi kesalahan.');
+			return back()->withInput();
 		}
 	}
 
@@ -116,10 +118,12 @@ class AkunController extends Controller
 			]);
 
 			DB::commit();
-			return redirect()->route('akun.index')->with('success', 'Akun berhasil diperbarui.');
+			Alert::success('Berhasil', 'Akun berhasil diperbarui.');
+			return redirect()->route('akun.index');
 		} catch (\Exception $e) {
 			DB::rollBack();
-			return back()->with('error', 'Terjadi kesalahan');
+			Alert::error('Error', 'Terjadi kesalahan.');
+			return back()->withInput();
 		}
 	}
 
@@ -134,10 +138,12 @@ class AkunController extends Controller
 			Akun::findOrFail($id)->delete();
 
 			DB::commit();
-			return redirect()->back()->with('success', 'Akun berhasil dihapus.');
+			Alert::success('Berhasil', 'Akun berhasil dihapus.');
+			return redirect()->back();
 		} catch (\Exception $e) {
 			DB::rollBack();
-			return back()->with('error', 'Terjadi kesalahan.');
+			Alert::error('Error', 'Terjadi kesalahan.');
+			return back()->withInput();
 		}
 	}
 

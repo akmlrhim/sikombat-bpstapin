@@ -1,7 +1,6 @@
 @extends('layouts.template')
 @section('content')
   <div class="row">
-    <x-alert />
     <div class="col-md-12">
       <div class="card card-primary">
 

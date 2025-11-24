@@ -8,9 +8,6 @@
       <a href="{{ route('mitra.create') }}" class="btn btn-success mb-3">Tambah Mitra</a>
     </div>
 
-    {{-- flashdata --}}
-    <x-alert />
-
     <div class="col-12">
       <div class="card">
         <div class="card-header">
@@ -52,7 +49,7 @@
                   <td>{{ $row->jenis_kelamin }}</td>
                   <td>{{ $row->alamat }}</td>
                   <td>
-                    <a href="{{ route('mitra.edit', $row->uuid) }}" class="btn btn-info btn-sm">Edit</a>
+                    <a href="{{ route('mitra.edit', $row->uuid) }}" class="btn btn-warning btn-sm">Edit</a>
                     <x-confirm-delete action="{{ route('mitra.destroy', $row->uuid) }}" />
                   </td>
                 </tr>
@@ -64,15 +61,11 @@
               @endforelse
             </tbody>
           </table>
-
         </div>
+      </div>
 
-        <div class="card-footer clearfix">
-          <ul class="pagination m-0 float-right">
-            {{ $mitra->links() }}
-          </ul>
-        </div>
-
+      <div class="d-flex justify-content-center align-items-center text-sm">
+        {{ $mitra->links() }}
       </div>
     </div>
   </div>

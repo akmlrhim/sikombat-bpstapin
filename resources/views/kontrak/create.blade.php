@@ -1,7 +1,6 @@
 @extends('layouts.template')
 @section('content')
   <div class="row">
-    <x-alert />
     <div class="col-md-12">
       <div class="card card-primary">
 
@@ -16,7 +15,7 @@
               {{-- BAGIAN DATA KONTRAK UTAMA  --}}
 
               {{-- mitra  --}}
-              <div class="form-group col-md-6">
+              <div class="form-group col-md-4">
                 <label class="mb-0" for="id_mitra">Mitra</label>
                 <select class="form-control select2 @error('id_mitra') is-invalid @enderror" id="id_mitra"
                   name="id_mitra" style="width: 100%;">
@@ -34,8 +33,28 @@
                 @enderror
               </div>
 
+              {{-- sebagai apa  --}}
+              <div class="form-group col-md-4">
+                <label class="mb-0" for="sebagai">Bertugas sebagai apa</label>
+                <select class="form-control select2 @error('sebagai') is-invalid @enderror" id="sebagai" name="sebagai"
+                  style="width: 100%;">
+                  <option value="" disabled {{ old('sebagai') ? '' : 'selected' }}>
+                    -- Pilih bertugas sebagai apa --
+                  </option>
+                  <option value="Pengumpulan Data" {{ old('sebagai') == 'Pengumpulan Data' ? 'selected' : '' }}>
+                    Pengumpulan Data
+                  </option>
+
+                  <option value="Pengolahan Data">Pengolahan Data</option>
+                  <option value="Pemeriksa Data">Pemeriksa Data</option>
+                </select>
+                @error('sebagai')
+                  <x-input-validation>{{ $message }}</x-input-validation>
+                @enderror
+              </div>
+
               {{-- periode  --}}
-              <div class="form-group col-md-6">
+              <div class="form-group col-md-4">
                 <label class="mb-0" for="periode" id="periode">Periode</label>
                 <input type="month" name="periode" id="periode"
                   class="form-control @error('periode') is-invalid @enderror" value="{{ old('periode') }}"
@@ -49,8 +68,8 @@
               <div class="form-group col-md-4">
                 <label class="mb-0" for="tanggal_kontrak" id="tanggal_kontrak">Tanggal Kontrak</label>
                 <input type="date" name="tanggal_kontrak" id="tanggal_kontrak"
-                  class="form-control @error('tanggal_kontrak') is-invalid @enderror" value="{{ old('tanggal_kontrak') }}"
-                  onclick="this.showPicker()" />
+                  class="form-control @error('tanggal_kontrak') is-invalid @enderror"
+                  value="{{ old('tanggal_kontrak') }}" onclick="this.showPicker()" />
                 @error('tanggal_kontrak')
                   <x-input-validation>{{ $message }}</x-input-validation>
                 @enderror

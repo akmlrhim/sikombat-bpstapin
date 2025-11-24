@@ -7,10 +7,6 @@
       <a href="{{ route('sub-akun.create') }}" class="btn btn-success mb-3">Tambah Sub Akun</a>
     </div>
 
-    {{-- flashdata --}}
-    <x-alert />
-
-
     <div class="col-12">
       <div class="card">
 
@@ -59,6 +55,8 @@
       </div>
     </div>
 
-    {{ $subAkun->links() }}
+    <div class="d-flex justify-content-center align-items-center text-sm">
+      {{ $subAkun->links() }}
+    </div>
   </div>
 @endsection

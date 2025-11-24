@@ -58,7 +58,7 @@
         {{-- data kegiatan mitra --}}
         <h4 class="text-primary mb-0">Data kegiatan</h4>
         <div class="table-responsive p-0">
-          <table class="table-sm table-bordered table text-nowrap align-middle">
+          <table class="table-sm text-sm table-bordered table text-nowrap align-middle">
             <thead>
               <tr class="text-center">
                 <th>Kode Akun</th>

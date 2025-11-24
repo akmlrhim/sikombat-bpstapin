@@ -170,6 +170,8 @@ return [
 		'kegiatan.*.satuan' => 'Satuan',
 		'kegiatan.*.harga_satuan' => 'Harga Satuan',
 
+		'id_mitra' => 'Mitra',
+
 		'detail.*.id_akun' => 'Akun',
 		'detail.*.id_sub_akun' => 'Sub Akun',
 		'detail.*.id_kegiatan' => 'Kegiatan',

@@ -1,9 +1,6 @@
 @extends('layouts.template')
 
 @section('content')
-  {{-- flashdata --}}
-  <x-alert />
-
   <div class="row">
     <div class="col-12">
       {{-- box informasi  --}}

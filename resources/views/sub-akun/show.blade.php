@@ -53,7 +53,7 @@
         <h5 class="text-primary">Daftar Kegiatan</h5>
 
         <div class="table-responsive">
-          <table class="table table-sm table-bordered">
+          <table class="table text-sm table-sm table-bordered">
             <thead>
               <tr class="text-nowrap">
                 <th class="text-primary">Kode Akun Kegiatan</th>

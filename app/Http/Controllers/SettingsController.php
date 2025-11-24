@@ -4,58 +4,47 @@ namespace App\Http\Controllers;
 
 use App\Models\Settings;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class SettingsController extends Controller
 {
-    public function index()
-    {
-        $title = 'Tambahan';
-        $sett = Settings::select('uuid', 'key', 'value')->get();
+	public function index()
+	{
+		$title = 'Tambahan';
+		$sett = Settings::select('uuid', 'key', 'value')->get();
 
-        return view('tambahan.index', compact('title', 'sett'));
-    }
+		return view('tambahan.index', compact('title', 'sett'));
+	}
 
-    // public function create()
-    // {
-    //     $title = 'Tambahan';
-    //     return view('tambahan.create', compact('title'));
-    // }
+	public function edit($uuid)
+	{
+		$title = 'Tambahan';
+		$sett = Settings::where('uuid', $uuid)->first();
+		return view('tambahan.edit', compact('sett', 'title'));
+	}
 
-    // public function store(Request $request)
-    // {
-    //     $request->validate([
-    //         'key' => 'required|unique:settings,key',
-    //         'value' => 'required'
-    //     ]);
+	public function update($uuid, Request $req)
+	{
+		$sett = Settings::where('uuid', $uuid)->first();
 
-    //     Settings::create([
-    //         'uuid' => Str::uuid(),
-    //         'key' => Str::snake($request->key),
-    //         'value' => $request->value
-    //     ]);
+		$req->validate([
+			'value' => 'required'
+		]);
 
-    //     return redirect()->route('tambahan.index')->with('success', 'Berhasil disimpan.');
-    // }
+		try {
+			DB::beginTransaction();
 
-    public function edit($uuid)
-    {
-        $title = 'Tambahan';
-        $sett = Settings::where('uuid', $uuid)->first();
-        return view('tambahan.edit', compact('sett', 'title'));
-    }
+			$sett->value = $req->value;
+			$sett->save();
 
-    public function update($uuid, Request $req)
-    {
-        $sett = Settings::where('uuid', $uuid)->first();
-
-        $req->validate([
-            'value' => 'required'
-        ]);
-
-        $sett->value = $req->value;
-        $sett->save();
-
-        return redirect()->route('tambahan.index')->with('success', 'Berhasil diperbarui.');
-    }
+			DB::commit();
+			Alert::success('Berhasil', 'Data berhasil diperbarui.');
+			return redirect()->route('profil.index');
+		} catch (\Exception $e) {
+			Alert::error('Error', 'Terjadi kesalahan');
+			return back()->withInput();
+		}
+	}
 }

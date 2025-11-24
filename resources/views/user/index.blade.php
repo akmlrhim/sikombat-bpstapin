@@ -7,9 +7,6 @@
       <a href="{{ route('user.create') }}" class="btn btn-success mb-3">Tambah user</a>
     </div>
 
-    {{-- flashdata --}}
-    <x-alert />
-
     <div class="col-12">
       <form action="{{ route('user.index') }}" method="GET">
         <div class="card shadow-sm rounded-lg">
@@ -77,7 +74,7 @@
 
                   </td>
                   <td>
-                    <a href="{{ route('user.edit', $row->id) }}" class="btn btn-info btn-sm">Edit</a>
+                    <a href="{{ route('user.edit', $row->id) }}" class="btn btn-warning btn-sm">Edit</a>
                     <x-confirm-delete action="{{ route('user.destroy', $row->id) }}" />
                   </td>
                 </tr>
@@ -89,13 +86,10 @@
             </tbody>
           </table>
         </div>
+      </div>
 
-        <div class="card-footer clearfix">
-          <ul class="pagination m-0 float-right">
-            {{ $user->links() }}
-          </ul>
-        </div>
-
+      <div class="d-flex justify-content-center align-items-center text-sm">
+        {{ $user->links() }}
       </div>
     </div>
   </div>

@@ -7,10 +7,6 @@
       <a href="{{ route('akun.create') }}" class="btn btn-success mb-3">Tambah Akun</a>
     </div>
 
-    {{-- flashdata --}}
-    <x-alert />
-
-
     <div class="col-12">
       <div class="card">
 
