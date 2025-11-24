@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('uuid', 128);
             $table->string('nomor_kontrak', 16)->index();
-            $table->foreignId('mitra_id')->constrained('mitra')->onDelete('cascade');
+            $table->foreignId('id_mitra')->constrained('mitra')->onDelete('cascade');
             $table->string('periode')->index();
             $table->date('tanggal_kontrak');
             $table->date('tanggal_bast');

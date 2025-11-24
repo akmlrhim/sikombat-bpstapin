@@ -42,6 +42,11 @@
               <th>Nama Kegiatan Sub Akun</th>
               <td class="text-primary">{{ $subAkun->nama_kegiatan_sub_akun }}</td>
             </tr>
+            <tr>
+              <th>Total </th>
+              <td class="font-weight-bold">Rp. {{ number_format($subAkun->kegiatan->sum('total_harga'), 0, ',', '.') }}
+              </td>
+            </tr>
           </table>
         </div>
 

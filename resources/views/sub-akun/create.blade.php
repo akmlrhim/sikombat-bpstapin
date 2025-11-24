@@ -2,7 +2,7 @@
 
 @section('content')
   <x-alert />
-  
+
   <div class="col-md-12">
 
     <h4>
@@ -48,7 +48,8 @@
                   <label for="nama_kegiatan_sub_akun">Nama Kegiatan Sub Akun</label>
                   <input type="text" class="form-control @error('nama_kegiatan_sub_akun') is-invalid @enderror"
                     name="nama_kegiatan_sub_akun" id="nama_kegiatan_sub_akun"
-                    placeholder="Contoh. Belanja Honor Output Kegiatan" value="{{ old('nama_kegiatan_sub_akun') }}" />
+                    placeholder="Contoh. Belanja Honor Output Kegiatan"
+                    value="{{ old('nama_kegiatan_sub_akun', 'Belanja Honor Output Kegiatan') }}" />
                   @error('nama_kegiatan_sub_akun')
                     <x-input-validation>{{ $message }}</x-input-validation>
                   @enderror

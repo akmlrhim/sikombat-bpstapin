@@ -37,6 +37,7 @@
                 <th>#</th>
                 <th>NMS</th>
                 <th>Nama Mitra</th>
+                <th>Total Honor</th>
                 <th>Periode</th>
                 <th>Aksi</th>
               </tr>
@@ -47,16 +48,17 @@
                   <td>{{ $index + $kontrak->firstItem() }}</td>
                   <td>{{ $row->mitra->nms }}</td>
                   <td>{{ $row->mitra->nama_lengkap }}</td>
-                  <td>{{ $row->periode }}</td>
+                  <td>Rp {{ number_format($row->total_honor, 0, ',', '.') }}</td>
+                  <td>{{ $row->periode->translatedFormat('F Y') }}</td>
                   <td>
+                    <a href="{{ route('kontrak.show', $row->uuid) }}" class="btn btn-warning btn-sm">Detail</a>
                     <a href="{{ route('kontrak.edit', $row->uuid) }}" class="btn btn-info btn-sm">Edit</a>
                     <x-confirm-delete action="{{ route('kontrak.destroy', $row->uuid) }}" />
                   </td>
                 </tr>
-
               @empty
                 <tr>
-                  <td colspan="6" class="text-center text-muted text-sm">Tidak ada data dalam tabel</td>
+                  <td colspan="6" class="text-center text-muted">Tidak ada data dalam tabel</td>
                 </tr>
               @endforelse
             </tbody>

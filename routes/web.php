@@ -69,10 +69,10 @@ Route::middleware('throttle:60,1')->group(function () {
 			Route::get('/', 'index')->name('index');
 			Route::get('create', 'create')->name('create');
 			Route::post('', 'store')->name('store');
-			Route::get('{kontrak}/detail', 'show')->name('show');
-			Route::get('{kontrak}/edit', 'edit')->name('edit');
-			Route::put('{kontrak}', 'update')->name('update');
-			Route::delete('{kontrak}', 'destroy')->name('destroy');
+			Route::get('{kontrak:uuid}/detail', 'show')->name('show');
+			Route::get('{kontrak:uuid}/edit', 'edit')->name('edit');
+			Route::put('{kontrak:uuid}', 'update')->name('update');
+			Route::delete('{kontrak:uuid}', 'destroy')->name('destroy');
 		});
 
 		// user manage route 
@@ -93,5 +93,9 @@ Route::middleware('throttle:60,1')->group(function () {
 
 			return view('visit', compact('visitor', 'title'));
 		})->name('visit')->middleware('role:admin');
+
+		//helper
+		Route::get('/ajax/sub-akun/{akun}', [HelperController::class, 'getSubAkun']);
+		Route::get('/ajax/kegiatan/{sub_akun}', [HelperController::class, 'getKegiatan']);
 	});
 });

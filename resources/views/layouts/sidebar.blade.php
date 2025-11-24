@@ -1,4 +1,4 @@
-<aside class="main-sidebar sidebar-dark-primary elevation-2">
+<aside class="main-sidebar sidebar-light-success border">
   <a href="{{ route('home') }}" class="brand-link">
     <img src="{{ asset('img/logo_bps.webp') }}" loading="lazy" title="Logo" alt="Logo"
       class="brand-image img-circle" />
