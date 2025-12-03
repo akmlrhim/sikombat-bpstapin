@@ -11,11 +11,9 @@
       <form action="{{ route('user.index') }}" method="GET">
         <div class="card shadow-sm rounded-lg">
           <div class="card-body">
-            <div class="form-row align-items-center">
-
-              {{-- filter role  --}}
-              <div class="col-md-3 mb-2">
-                <label for="role" class="text-primary font-weight-bold">Role</label>
+            <div class="form-row">
+              <div class="col-md-3 mb-3">
+                <label for="role" class="font-weight-bold text-secondary">Role</label>
                 <select name="role" id="role" class="custom-select" onchange="this.form.submit()">
                   <option value="">-- Semua Role --</option>
                   <option value="ketua_tim" {{ request('role') == 'ketua_tim' ? 'selected' : '' }}>Ketua Tim</option>
@@ -24,16 +22,14 @@
                 </select>
               </div>
 
-              {{-- search  --}}
-              <div class="col-md-4 mb-2">
-                <label for="keyword" class="text-primary font-weight-bold">Cari Nama / NIP</label>
+              <div class="col-md-5 mb-3">
+                <label for="keyword" class="font-weight-bold text-secondary">Cari Nama / NIP</label>
                 <input type="text" name="keyword" id="keyword" class="form-control" value="{{ request('keyword') }}"
-                  placeholder="Masukkan Nama Lengkap atau NIP" autocomplete="off" autocomplete="off" />
+                  placeholder="Masukkan Nama Lengkap atau NIP" autocomplete="off">
               </div>
 
-              {{-- button  --}}
-              <div class="col-md-4 mb-2 d-flex align-items-end">
-                <a href="{{ route('user.index') }}" class="btn btn-sm btn-secondary" title="Reset">
+              <div class="col-md-4 mb-3 d-flex align-items-end">
+                <a id="reset_filter" href="{{ route('user.index') }}" class="btn btn-secondary btn-block">
                   Reset Filter
                 </a>
               </div>
@@ -43,6 +39,7 @@
         </div>
       </form>
     </div>
+
 
     <div class="col-12">
       <div class="card">

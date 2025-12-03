@@ -123,7 +123,7 @@
   {{-- perjanjian kerja  --}}
   <div class="header">
     <p class="bold">PERJANJIAN KERJA</p>
-    <p class="bold uppercase">PETUGAS PENGUMPULAN DATA DATA SURVEI</p>
+    <p class="bold uppercase">PETUGAS {{ Str::upper($kontrak->sebagai) }} SURVEI</p>
     <p class="bold uppercase">KEGIATAN BULAN {{ $kontrak->periode->translatedFormat('F Y') }}
     </p>
     <p class="bold">BADAN PUSAT STATISTIK KABUPATEN TAPIN</p>
@@ -146,14 +146,14 @@
       <tr style="border: none;">
         <td style="border: none;">{{ $kontrak->mitra->nama_lengkap }}</td>
         <td style="border: none;">:</td>
-        <td style="border: none; text-align:justify;">Petugas {{ $kontrak->tugas->first()->anggaran->nama_kegiatan }}
-          Data Survei, berkedudukan di {{ $kontrak->mitra->alamat }} Kabupaten Tapin, bertindak untuk dan atas nama diri
+        <td style="border: none; text-align:justify;">Petugas {{ $kontrak->sebagai }}
+          Survei, berkedudukan di {{ $kontrak->mitra->alamat }} Kabupaten Tapin, bertindak untuk dan atas nama diri
           sendiri, selanjutnya disebut sebagai <span class="bold">PIHAK KEDUA</span>.</td>
       </tr>
     </table>
     <p>bahwa <span class="bold">PIHAK PERTAMA</span> dan <span class="bold">PIHAK KEDUA</span> yang secara
       bersama-sama disebut <span class="bold">PARA PIHAK</span>, sepakat untuk mengikatkan diri dalam Perjanjian Kerja
-      Petugas {{ $kontrak->tugas->first()->anggaran->nama_kegiatan }} Data Survei di Badan Pusat Statistik Kabupaten
+      Petugas {{ $kontrak->sebagai }} Survei di Badan Pusat Statistik Kabupaten
       Tapin, yang selanjutnya disebut Perjanjian,
       dengan ketentuan-ketentuan sebagai berikut:</p>
 
@@ -163,7 +163,7 @@
     <p class="pasal">Pasal 1</p>
     <p><span class="bold">PIHAK PERTAMA</span> memberikan pekerjaan kepada <span class="bold">PIHAK KEDUA</span> dan
       <span class="bold">PIHAK KEDUA</span> menerima pekerjaan dari <span class="bold">PIHAK PERTAMA</span> sebagai
-      Petugas {{ $kontrak->tugas->first()->anggaran->nama_kegiatan }} Data Survei dengan lingkup pekerjaan yang
+      Petugas {{ $kontrak->sebagai }} Survei dengan lingkup pekerjaan yang
       ditetapkan oleh <span class="bold">PIHAK
         PERTAMA</span>.
     </p>
@@ -217,7 +217,7 @@
       </li>
 
       <li>Dikecualikan sebagaimana diatur pada ayat (1), apabila dari hasil evaluasi sebagaimana Pasal 2 ayat (3)
-        dianggap tidak layak sebagai petugas {{ $kontrak->tugas->first()->anggaran->nama_kegiatan }} Data Survei, maka
+        dianggap tidak layak sebagai petugas {{ $kontrak->sebagai }} Survei, maka
         <span class="bold">PIHAK PERTAMA</span> dapat mengakhiri perjanjian ini secara sepihak.
       </li>
     </ol>
@@ -290,8 +290,8 @@
     {{-- pasal 9 --}}
     <p class="pasal">Pasal 9</p>
     <p><span class="bold">PIHAK PERTAMA</span> melakukan evaluasi atas target penyelesaian pekerjaan dan kualitas
-      hasil {{ $kontrak->tugas->first()->anggaran->nama_kegiatan }} Data Survei yang dilaksanakan oleh <span
-        class="bold">PIHAK KEDUA</span> secara berkala setiap
+      hasil {{ $kontrak->sebagai }} Survei yang dilaksanakan oleh <span class="bold">PIHAK KEDUA</span> secara
+      berkala setiap
       minggu.</p>
 
     {{-- Pasal 10  --}}
@@ -398,7 +398,7 @@
 
   {{-- alokasi  --}}
   <div class="sub-header">
-    <p class="bold uppercase">ALOKASI TUGAS {{ $kontrak->tugas->first()->anggaran->nama_kegiatan }} DATA SURVEI</p>
+    <p class="bold uppercase">ALOKASI TUGAS {{ $kontrak->sebagai }} SURVEI</p>
     <p class="bold uppercase">BULAN {{ $kontrak->periode->translatedFormat('F Y') }} BPS KABUPATEN TAPIN</p>
   </div>
   <br>
@@ -439,15 +439,17 @@
       </tr>
     </thead>
     <tbody>
-      @foreach ($kontrak->tugas as $index => $item)
+      @foreach ($kontrak->detail as $index => $item)
         <tr>
           <td class="center">{{ $index + 1 }}</td>
-          <td>{{ $item->anggaran->kode_anggaran }}</td>
-          <td>{{ $item->deskripsi_tugas }}</td>
-          <td class="center">{{ $item->jumlah_dokumen }} {{ $item->satuan }}</td>
-          <td>{{ 'Rp ' . number_format($item->harga_satuan, 0, ',', '.') }}
+          <td>
+            {{ $item->output->kode_output }}.{{ $item->komponen->kode_komponen }}
           </td>
-          <td style="text-align: right;">{{ 'Rp ' . number_format($item->harga_total_tugas, 0, ',', '.') }}</td>
+          <td>{{ $item->komponen->nama_komponen }}</td>
+          <td class="center">{{ $item->jumlah_dokumen }} {{ $item->komponen->satuan }}</td>
+          <td>{{ 'Rp ' . number_format($item->komponen->harga_satuan, 0, ',', '.') }}
+          </td>
+          <td style="text-align: right;">{{ 'Rp ' . number_format($item->total_honor, 0, ',', '.') }}</td>
           <td style="text-align: right;"></td>
         </tr>
       @endforeach
@@ -456,7 +458,7 @@
       <tr>
         <td colspan="2" class="bold" style="text-align: center;">TOTAL KESELURUHAN</td>
         <td colspan="5" class="bold" style="text-align: right;">
-          Rp{{ number_format($kontrak->total_honor, 0, ',', ',') }}.-
+          Rp{{ number_format($kontrak->sum('total_honor'), 0, ',', ',') }}.-
           ({{ $kontrak->total_honor_terbilang }})
         </td>
       </tr>
@@ -484,7 +486,7 @@
   {{-- berita acara serah terima  --}}
   <div class="header">
     <p class="bold">BERITA ACARA SERAH TERIMA PEKERJAAN</p>
-    <p class="bold uppercase">{{ $kontrak->tugas->first()->anggaran->nama_kegiatan }} DATA SURVEI</p>
+    <p class="bold uppercase">{{ $kontrak->sebagai }} DATA SURVEI</p>
     <p class="bold uppercase">KEGIATAN BULAN {{ $kontrak->periode->translatedFormat('F Y') }}</p>
     <p class="bold">BADAN PUSAT STATISTIK KABUPATEN TAPIN</p>
   </div>
@@ -509,8 +511,8 @@
       <tr style="border: none;">
         <td style="border: none;">{{ $kontrak->mitra->nama_lengkap }}</td>
         <td style="border: none;">:</td>
-        <td style="border: none;text-align:justify;">{{ ucfirst($kontrak->tugas->first()->anggaran->nama_kegiatan) }}
-          Data Survei, berkedudukan di {{ $kontrak->mitra->alamat }} Kabupaten Tapin, bertindak untuk dan atas nama
+        <td style="border: none;text-align:justify;">{{ ucfirst($kontrak->sebagai) }}
+          Survei, berkedudukan di {{ $kontrak->mitra->alamat }} Kabupaten Tapin, bertindak untuk dan atas nama
           diri sendiri,
           selanjutnya disebut
           sebagai <span class="bold">PIHAK KEDUA</span>.
@@ -521,7 +523,7 @@
       Nomor:
       {{ $kontrak->nomor_kontrak }}/SPK/63051/KP.200/{{ $kontrak->created_at->format('m') }}/{{ $kontrak->created_at->format('Y') }},
       {{ $kontrak->tanggal_kontrak->translatedFormat('d F Y') }}, bersama ini PIHAK KEDUA telah menyerahkan hasil
-      pekerjaan {{ ucfirst($kontrak->tugas->first()->anggaran->nama_kegiatan) }} Data Survei Kegiatan Bulan <span
+      pekerjaan {{ ucfirst($kontrak->sebagai) }} Survei Kegiatan Bulan <span
         class="uppercase">{{ $kontrak->created_at->translatedFormat('F') }}</span>
       {{ $kontrak->created_at->format('Y') }} di Kabupaten Tapin kepada PIHAK PERTAMA, dengan ketentuan sebagai
       berikut:
@@ -567,7 +569,7 @@
   {{-- Realisasi kegiatan  --}}
   <div class="sub-header">
     <p class="bold uppercase">
-      REALISASI KEGIATAN {{ $kontrak->tugas->first()->anggaran->nama_kegiatan }} DATA SURVEI
+      REALISASI KEGIATAN {{ $kontrak->sebagai }} DATA SURVEI
     </p>
     <p class="bold uppercase">BULAN {{ $kontrak->periode->translatedFormat('F Y') }} BPS KABUPATEN TAPIN
     </p>
@@ -608,14 +610,16 @@
       </tr>
     </thead>
     <tbody>
-      @foreach ($kontrak->tugas as $index => $item)
+      @foreach ($kontrak->detail as $index => $item)
         <tr>
           <td class="center">{{ $index + 1 }}</td>
-          <td>{{ $item->anggaran->kode_anggaran }}</td>
-          <td>{{ $item->deskripsi_tugas }}</td>
-          <td class="center">{{ $item->jumlah_target_dokumen }} {{ $item->satuan }}</td>
-          <td class="center">{{ $item->jumlah_dokumen }} {{ $item->satuan }}</td>
-          <td></td>
+          <td>
+            {{ $item->output->kode_output }}.{{ $item->komponen->kode_komponen }}
+          </td>
+          <td>{{ $item->komponen->nama_komponen }}</td>
+          <td class="center">{{ $item->jumlah_target_dokumen }} {{ $item->komponen->satuan }}</td>
+          <td class="center">{{ $item->jumlah_dokumen }} {{ $item->komponen->satuan }}</td>
+          <td style="text-align: right;"></td>
         </tr>
       @endforeach
     </tbody>
@@ -623,7 +627,7 @@
       <tr>
         <td colspan="4" class="bold" style="text-align: center;">PERSENTASE PENYELESAIAN PEKERJAAN</td>
         <td class="bold center" colspan="2">
-          {{ number_format(($kontrak->tugas->sum('jumlah_dokumen') / $kontrak->tugas->sum('jumlah_target_dokumen')) * 100, 1) }}%
+          {{ number_format(($kontrak->detail->sum('jumlah_dokumen') / $kontrak->detail->sum('jumlah_target_dokumen')) * 100, 1) }}%
         </td>
       </tr>
     </tfoot>
@@ -674,7 +678,7 @@
       </tr>
     </table>
     <p>Bertindak untuk dan atas nama Mitra Statistik BPS Kabupaten Tapin</p>
-    <p>Sehubungan dengan pelaksanaan kegiatan {{ $kontrak->tugas->first()->anggaran->nama_kegiatan }} data
+    <p>Sehubungan dengan pelaksanaan kegiatan {{ $kontrak->sebagai }}
       Sensus/Survei* TA {{ date('Y') }} bulan : <span
         class="uppercase">{{ $kontrak->periode->translatedFormat('F Y') }}</span>
       , dengan ini saya menyatakan bahwa :</p>

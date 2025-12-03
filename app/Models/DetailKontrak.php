@@ -11,9 +11,9 @@ class DetailKontrak extends Model
 	protected $fillable = [
 		'id_mitra',
 		'id_kontrak',
-		'id_akun',
-		'id_sub_akun',
 		'id_kegiatan',
+		'id_output',
+		'id_komponen',
 		'jumlah_target_dokumen',
 		'jumlah_dokumen',
 		'total_honor'
@@ -24,18 +24,18 @@ class DetailKontrak extends Model
 		return $this->belongsTo(Kontrak::class, 'id_kontrak');
 	}
 
-	public function subAkun()
+	public function output()
 	{
-		return $this->belongsTo(SubAkun::class, 'id_sub_akun');
+		return $this->belongsTo(Output::class, 'id_output');
+	}
+
+	public function komponen()
+	{
+		return $this->belongsTo(Komponen::class, 'id_komponen');
 	}
 
 	public function kegiatan()
 	{
 		return $this->belongsTo(Kegiatan::class, 'id_kegiatan');
-	}
-
-	public function akun()
-	{
-		return $this->belongsTo(Akun::class, 'id_akun');
 	}
 }

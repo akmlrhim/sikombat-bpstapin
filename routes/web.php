@@ -4,8 +4,10 @@ use App\Http\Controllers\AkunController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HelperController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\KontrakController;
 use App\Http\Controllers\MitraController;
+use App\Http\Controllers\OutputController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\SubAkunController;
@@ -30,25 +32,25 @@ Route::middleware('throttle:60,1')->group(function () {
 
 		Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-		// akun route 
-		Route::prefix('akun')->name('akun.')->controller(AkunController::class)->group(function () {
+		// kegiatan route 
+		Route::prefix('kegiatan')->name('kegiatan.')->controller(KegiatanController::class)->group(function () {
 			Route::get('/', 'index')->name('index');
 			Route::get('create', 'create')->name('create');
 			Route::post('', 'store')->name('store');
-			Route::get('{akun}/edit', 'edit')->name('edit');
-			Route::put('{akun}', 'update')->name('update');
-			Route::delete('{akun}', 'destroy')->name('destroy');
-			Route::get('{akun}/sub-akun', 'subAkun')->name('sub-akun');
+			Route::get('{kegiatan}/edit', 'edit')->name('edit');
+			Route::put('{kegiatan}', 'update')->name('update');
+			Route::delete('{kegiatan}', 'destroy')->name('destroy');
+			Route::get('{kegiatan}/output', 'output')->name('output');
 		});
 
-		// sub akun route 
-		Route::prefix('akun/{akun:uuid}/sub-akun')->name('akun.sub-akun.')->controller(SubAkunController::class)->group(function () {
+		// output route 
+		Route::prefix('kegiatan/{kegiatan:uuid}/output')->name('kegiatan.output.')->controller(OutputController::class)->group(function () {
 			Route::get('create', 'create')->name('create');
 			Route::post('', 'store')->name('store');
-			Route::get('{sub_akun}/edit', 'edit')->name('edit');
-			Route::get('{sub_akun}/detail', 'show')->name('show');
-			Route::put('{sub_akun}', 'update')->name('update');
-			Route::delete('{sub_akun}', 'destroy')->name('destroy');
+			Route::get('{output}/edit', 'edit')->name('edit');
+			Route::get('{output}/detail', 'show')->name('show');
+			Route::put('{output}', 'update')->name('update');
+			Route::delete('{output}', 'destroy')->name('destroy');
 		});
 
 		// mitra route 
@@ -73,6 +75,7 @@ Route::middleware('throttle:60,1')->group(function () {
 			Route::get('{kontrak:uuid}/edit', 'edit')->name('edit');
 			Route::put('{kontrak:uuid}', 'update')->name('update');
 			Route::delete('{kontrak:uuid}', 'destroy')->name('destroy');
+			Route::get('kontrak/file/{kontrak:uuid}', 'fileKontrak')->name('file');
 		});
 
 		// user manage route 
@@ -95,7 +98,7 @@ Route::middleware('throttle:60,1')->group(function () {
 		})->name('visit')->middleware('role:admin');
 
 		//helper
-		Route::get('/ajax/sub-akun/{akun}', [HelperController::class, 'getSubAkun']);
-		Route::get('/ajax/kegiatan/{sub_akun}', [HelperController::class, 'getKegiatan']);
+		Route::get('/ajax/output/{kegiatan}', [HelperController::class, 'getOutput']);
+		Route::get('/ajax/komponen/{output}', [HelperController::class, 'getKomponen']);
 	});
 });

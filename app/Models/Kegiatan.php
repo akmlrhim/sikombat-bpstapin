@@ -6,19 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Kegiatan extends Model
 {
-    protected $table = 'kegiatan';
-    protected $fillable = [
-        'id_sub_akun',
-        'kode_akun_kegiatan',
-        'nama_kegiatan',
-        'jumlah_sampel',
-        'satuan',
-        'harga_satuan',
-        'total_harga'
-    ];
+	protected $table = 'kegiatan';
+	protected $fillable = [
+		'uuid',
+		'kode_kegiatan',
+		'nama_kegiatan',
+		'pagu_anggaran',
+		'sisa_anggaran'
+	];
 
-    public function subAkun()
-    {
-        return $this->belongsTo(SubAkun::class, 'id_sub_akun');
-    }
+	public function getRouteKeyName()
+	{
+		return 'uuid';
+	}
+
+	public function output()
+	{
+		return $this->hasMany(Output::class, 'id_kegiatan');
+	}
 }

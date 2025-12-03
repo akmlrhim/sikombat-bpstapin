@@ -162,21 +162,23 @@ return [
 		'new_password_confirmation' => 'Konfirmasi password',
 		'g-recaptcha-response' => 'reCAPTCHA',
 
-		'id_akun' => 'Akun',
+		'id_output' => 'Output',
+		'id_kontrak' => 'Kontrak',
+		'id_kegiatan' => 'Kegiatan',
+		'id_komponen' => 'Komponen',
 
-		'kegiatan.*.kode_akun_kegiatan' => 'Kode Akun Kegiatan',
-		'kegiatan.*.nama_kegiatan' => 'Nama Kegiatan',
-		'kegiatan.*.jumlah_sampel' => 'Jumlah sampel',
-		'kegiatan.*.satuan' => 'Satuan',
-		'kegiatan.*.harga_satuan' => 'Harga Satuan',
+		'komponen.*.kode_komponen' => 'Kode komponen',
+		'komponen.*.nama_komponen' => 'Nama komponen',
+		'komponen.*.jumlah_sampel' => 'Jumlah sampel',
+		'komponen.*.satuan' => 'Satuan',
+		'komponen.*.harga_satuan' => 'Harga satuan',
 
-		'id_mitra' => 'Mitra',
-
-		'detail.*.id_akun' => 'Akun',
-		'detail.*.id_sub_akun' => 'Sub Akun',
+		'detail' => 'Detail',
 		'detail.*.id_kegiatan' => 'Kegiatan',
+		'detail.*.id_output' => 'Output',
+		'detail.*.id_komponen' => 'Komponen',
 		'detail.*.jumlah_target_dokumen' => 'Jumlah target dokumen',
-		'detail.*.jumlah_dokumen' => 'Jumlah dokumen',
+		'detail.*.jumlah_dokumen' => 'Jumlah dokumen'
 	],
 
 ];

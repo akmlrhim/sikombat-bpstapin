@@ -5,25 +5,26 @@
     <div class="card card-primary">
 
       <div class="card-body">
-        <form method="POST" action="{{ route('akun.store') }}">
+        <form method="POST" action="{{ route('kegiatan.store') }}">
           @csrf
           <div class="row">
             <div class="col-md-12">
 
               <div class="form-group">
-                <label for="kode_akun">Kode Akun Utama</label>
-                <input type="text" class="form-control @error('kode_akun') is-invalid @enderror" id="kode_akun"
-                  name="kode_akun" placeholder="Contoh. 2988" value="{{ old('kode_akun') }}">
-                @error('kode_akun')
+                <label for="kode_kegiatan">Kode Kegiatan</label>
+                <input type="text" class="form-control @error('kode_kegiatan') is-invalid @enderror" id="kode_kegiatan"
+                  name="kode_kegiatan" placeholder="Contoh. 2988" value="{{ old('kode_kegiatan') }}">
+                @error('kode_kegiatan')
                   <x-input-validation>{{ $message }}</x-input-validation>
                 @enderror
               </div>
 
               <div class="form-group">
-                <label for="nama_akun">Nama Akun Utama</label>
-                <input type="text" class="form-control @error('nama_akun') is-invalid @enderror" id="nama_akun"
-                  name="nama_akun" placeholder="Contoh. Penyediaan dan Pengembangan ..." value="{{ old('nama_akun') }}">
-                @error('nama_akun')
+                <label for="nama_kegiatan">Nama Kegiatan</label>
+                <input type="text" class="form-control @error('nama_kegiatan') is-invalid @enderror" id="nama_kegiatan"
+                  name="nama_kegiatan" placeholder="Contoh. Penyediaan dan Pengembangan ..."
+                  value="{{ old('nama_kegiatan') }}">
+                @error('nama_kegiatan')
                   <x-input-validation>{{ $message }}</x-input-validation>
                 @enderror
               </div>
@@ -42,7 +43,7 @@
           </div>
 
           <div class="mt-2">
-            <a href="{{ route('akun.index') }}">
+            <a href="{{ route('kegiatan.index') }}">
               <button type="button" class="btn btn-secondary">Kembali</button>
             </a>
             <button type="submit" class="btn btn-primary">Simpan data</button>

@@ -112,39 +112,38 @@
             <hr />
 
             {{-- BAGIAN DETAIL KEGIATAN KONTRAK  --}}
-            <h4 class="text-primary font-weight-bold">Detail Kegiatan</h4>
+            <h4 class="text-primary font-weight-bold">Detail Tugas</h4>
 
             <div id="detail-wrapper">
-              {{-- render existing detail (old or from model) --}}
               @php
                 $oldDetail = old('detail', $kontrak->detail->toArray());
               @endphp
 
               @foreach ($oldDetail as $i => $d)
-                <div class="detail-item border p-3 mb-3" data-old-sub="{{ $d['id_sub_akun'] ?? '' }}"
-                  data-old-keg="{{ $d['id_kegiatan'] ?? '' }}">
+                <div class="detail-item border p-3 mb-3" data-old-output="{{ $d['id_output'] ?? '' }}"
+                  data-old-komponen="{{ $d['id_komponen'] ?? '' }}">
 
                   <div class="row mb-2">
                     <div class="col-md-6">
-                      <select name="detail[{{ $i }}][id_akun]" class="custom-select akun-select">
-                        <option value="">-- Pilih Akun --</option>
-                        @foreach ($akun as $a)
-                          <option value="{{ $a->id }}"
-                            {{ old("detail.$i.id_akun", $d['id_akun'] ?? '') == $a->id ? 'selected' : '' }}>
-                            {{ $a->kode_akun }} - {{ $a->nama_akun }}
+                      <select name="detail[{{ $i }}][id_kegiatan]" class="custom-select kegiatan-select">
+                        <option value="">-- Pilih Kegiatan --</option>
+                        @foreach ($kegiatan as $k)
+                          <option value="{{ $k->id }}"
+                            {{ old("detail.$i.id_kegiatan", $d['id_kegiatan'] ?? '') == $k->id ? 'selected' : '' }}>
+                            {{ $k->kode_kegiatan }} - {{ $k->nama_kegiatan }}
                           </option>
                         @endforeach
                       </select>
-                      @error("detail.$i.id_akun")
+                      @error("detail.$i.id_kegiatan")
                         <x-input-validation>{{ $message }}</x-input-validation>
                       @enderror
                     </div>
 
                     <div class="col-md-6">
-                      <select name="detail[{{ $i }}][id_sub_akun]" class="custom-select sub-akun-select">
-                        <option value="">-- Pilih Sub Akun --</option>
+                      <select name="detail[{{ $i }}][id_output]" class="custom-select output-select">
+                        <option value="">-- Pilih Komponen --</option>
                       </select>
-                      @error("detail.$i.id_sub_akun")
+                      @error("detail.$i.id_output")
                         <x-input-validation>{{ $message }}</x-input-validation>
                       @enderror
                     </div>
@@ -152,10 +151,10 @@
 
                   <div class="row">
                     <div class="col-md-12">
-                      <select name="detail[{{ $i }}][id_kegiatan]" class="custom-select kegiatan-select">
-                        <option value="">-- Pilih Kegiatan --</option>
+                      <select name="detail[{{ $i }}][id_komponen]" class="custom-select komponen-select">
+                        <option value="">-- Pilih Komponen --</option>
                       </select>
-                      @error("detail.$i.id_kegiatan")
+                      @error("detail.$i.id_komponen")
                         <x-input-validation>{{ $message }}</x-input-validation>
                       @enderror
                     </div>
@@ -191,28 +190,28 @@
 
             {{-- template for new data  --}}
             <div id="detail-template" class="d-none">
-              <div class="detail-item border p-3 mb-3" data-old-sub="" data-old-keg="">
+              <div class="detail-item border p-3 mb-3" data-old-output="" data-old-komponen="">
                 <div class="row mb-2">
                   <div class="col-md-6">
-                    <select name="__NAME__" class="custom-select akun-select">
-                      <option value="">-- Pilih Akun --</option>
-                      @foreach ($akun as $a)
-                        <option value="{{ $a->id }}">{{ $a->kode_akun }} - {{ $a->nama_akun }}</option>
+                    <select name="__NAME__" class="custom-select kegiatan-select">
+                      <option value="">-- Pilih Kegiatan --</option>
+                      @foreach ($kegiatan as $k)
+                        <option value="{{ $k->id }}">{{ $k->kode_kegiatan }} - {{ $k->nama_kegiatan }}</option>
                       @endforeach
                     </select>
                   </div>
 
                   <div class="col-md-6">
-                    <select name="__NAME__" class="custom-select sub-akun-select">
-                      <option value="">-- Pilih Sub Akun --</option>
+                    <select name="__NAME__" class="custom-select output-select">
+                      <option value="">-- Pilih Output --</option>
                     </select>
                   </div>
                 </div>
 
                 <div class="row">
                   <div class="col-md-12">
-                    <select name="__NAME__" class="custom-select kegiatan-select">
-                      <option value="">-- Pilih Kegiatan --</option>
+                    <select name="__NAME__" class="custom-select komponen-select">
+                      <option value="">-- Pilih Komponen --</option>
                     </select>
                   </div>
                 </div>
@@ -234,7 +233,7 @@
               </div>
             </div>
 
-            <button type="button" id="addDetail" class="btn btn-primary btn-sm mt-2">+ Tambah Kegiatan</button>
+            <button type="button" id="addDetail" class="btn btn-primary btn-sm mt-2">+ Tambah</button>
 
             <div class="mt-2">
               <a href="{{ route('kontrak.index') }}" class="btn btn-secondary">Kembali</a>
@@ -258,9 +257,9 @@
       let index = $('#detail-wrapper .detail-item').length;
 
       function setNames($item, idx) {
-        $item.find('select.akun-select').attr('name', `detail[${idx}][id_akun]`);
-        $item.find('select.sub-akun-select').attr('name', `detail[${idx}][id_sub_akun]`);
         $item.find('select.kegiatan-select').attr('name', `detail[${idx}][id_kegiatan]`);
+        $item.find('select.output-select').attr('name', `detail[${idx}][id_output]`);
+        $item.find('select.komponen-select').attr('name', `detail[${idx}][id_kegiatan]`);
         $item.find('input[name="__NAME__"]').each(function(i) {
 
         });
@@ -279,8 +278,8 @@
         let tpl = $('#detail-template .detail-item').first().clone();
         setNames(tpl, index);
 
-        tpl.attr('data-old-sub', '');
-        tpl.attr('data-old-keg', '');
+        tpl.attr('data-old-output', '');
+        tpl.attr('data-old-komponen', '');
 
         $('#detail-wrapper').append(tpl);
 
@@ -302,70 +301,70 @@
         index = $('#detail-wrapper .detail-item').length;
       });
 
-      $(document).on('change', '.akun-select', function() {
+      $(document).on('change', '.kegiatan-select', function() {
         let parent = $(this).closest('.detail-item');
-        let akunID = $(this).val();
-        let subSelect = parent.find('.sub-akun-select');
-        let kegSelect = parent.find('.kegiatan-select');
+        let kegiatanID = $(this).val();
+        let outputSelect = parent.find('.output-select');
+        let komponenSelect = parent.find('.komponen-select');
 
-        subSelect.html('<option>Loading...</option>').prop('disabled', true);
-        kegSelect.html('<option>-- Pilih Kegiatan --</option>').prop('disabled', true);
+        outputSelect.html('<option>Loading...</option>').prop('disabled', true);
+        komponenSelect.html('<option>-- Pilih Komponen --</option>').prop('disabled', true);
 
-        if (akunID) {
-          $.get('/ajax/sub-akun/' + akunID, function(res) {
-            subSelect.html('<option value="">-- Pilih Sub Akun --</option>');
+        if (kegiatanID) {
+          $.get('/ajax/output/' + kegiatanID, function(res) {
+            outputSelect.html('<option value="">-- Pilih Output --</option>');
             res.forEach(function(r) {
-              subSelect.append(
-                `<option value="${r.id}">${r.kode_sub_akun} - ${r.nama_sub_akun}</option>`);
+              outputSelect.append(
+                `<option value="${r.id}">${r.kode_output} - ${r.nama_output}</option>`);
             });
-            subSelect.prop('disabled', false);
+            outputSelect.prop('disabled', false);
 
-            let oldSub = parent.attr('data-old-sub');
-            if (oldSub) {
-              subSelect.val(oldSub).trigger('change');
-              parent.attr('data-old-sub', '');
+            let oldOutput = parent.attr('data-old-output');
+            if (oldOutput) {
+              outputSelect.val(oldOutput).trigger('change');
+              parent.attr('data-old-output', '');
             }
           }).fail(function() {
-            subSelect.html('<option value="">-- Pilih Sub Akun --</option>').prop('disabled', false);
+            outputSelect.html('<option value="">-- Pilih Output --</option>').prop('disabled', false);
           });
         } else {
-          subSelect.html('<option value="">-- Pilih Sub Akun --</option>').prop('disabled', false);
+          outputSelect.html('<option value="">-- Pilih Output --</option>').prop('disabled', false);
         }
       });
 
-      $(document).on('change', '.sub-akun-select', function() {
+      $(document).on('change', '.output-select', function() {
         let parent = $(this).closest('.detail-item');
-        let subID = $(this).val();
-        let kegSelect = parent.find('.kegiatan-select');
+        let outputID = $(this).val();
+        let komponenSelect = parent.find('.komponen-select');
 
-        kegSelect.html('<option>Loading...</option>').prop('disabled', true);
+        komponenSelect.html('<option>Loading...</option>').prop('disabled', true);
 
-        if (subID) {
-          $.get('/ajax/kegiatan/' + subID, function(res) {
-            kegSelect.html('<option value="">-- Pilih Kegiatan --</option>');
+        if (outputID) {
+          $.get('/ajax/komponen/' + outputID, function(res) {
+            komponenSelect.html('<option value="">-- Pilih komponen --</option>');
             res.forEach(function(r) {
-              kegSelect.append(
-                `<option value="${r.id}">${r.kode_akun_kegiatan} - ${r.nama_kegiatan}</option>`);
+              komponenSelect.append(
+                `<option value="${r.id}">${r.kode_komponen} - ${r.nama_komponen}</option>`);
             });
-            kegSelect.prop('disabled', false);
+            komponenSelect.prop('disabled', false);
 
-            let oldKeg = parent.attr('data-old-keg');
-            if (oldKeg) {
-              kegSelect.val(oldKeg);
-              parent.attr('data-old-keg', '');
+            let oldKomponen = parent.attr('data-old-komponen');
+            if (oldKomponen) {
+              komponenSelect.val(oldKomponen);
+              parent.attr('data-old-komponen', '');
             }
           }).fail(function() {
-            kegSelect.html('<option value="">-- Pilih Kegiatan --</option>').prop('disabled', false);
+            komponenSelect.html('<option value="">-- Pilih Komponen --</option>').prop('disabled', false);
           });
         } else {
-          kegSelect.html('<option value="">-- Pilih Kegiatan --</option>').prop('disabled', false);
+          komponenSelect.html('<option value="">-- Pilih Komponen --</option>').prop('disabled', false);
         }
       });
 
       $('#detail-wrapper .detail-item').each(function() {
-        let oldAkun = $(this).find('.akun-select').val();
-        if (oldAkun) {
-          $(this).find('.akun-select').trigger('change');
+        let oldKegiatan = $(this).find('.kegiatan-select').val();
+        if (oldKegiatan) {
+          $(this).find('.kegiatan-select').trigger('change');
         }
       });
 

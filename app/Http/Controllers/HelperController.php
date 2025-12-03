@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Kegiatan;
-use App\Models\SubAkun;
+use App\Models\Komponen;
+use App\Models\Output;
 
 class HelperController extends Controller
 {
-	public function getSubAkun($id_akun)
+	public function getOutput($id_kegiatan)
 	{
-		$data = SubAkun::where('id_akun', $id_akun)->get();
+		$data = Output::where('id_kegiatan', $id_kegiatan)->get();
 		return response()->json($data);
 	}
 
-	public function getKegiatan($id_sub_akun)
+	public function getKomponen($id_output)
 	{
-		$data = Kegiatan::where('id_sub_akun', $id_sub_akun)->get();
+		$data = Komponen::where('id_output', $id_output)->get();
 		return response()->json($data);
 	}
 }

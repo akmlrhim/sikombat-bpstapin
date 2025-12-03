@@ -42,17 +42,17 @@
           </li>
 
           <li class="nav-item">
-            <a href="{{ route('akun.index') }}" class="nav-link {{ request()->routeIs('akun.*') ? 'active' : '' }}">
+            <a href="{{ route('kegiatan.index') }}" class="nav-link {{ request()->routeIs('akun.*') ? 'active' : '' }}">
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                class="lucide lucide-database-zap-icon lucide-database-zap nav-icon">
-                <ellipse cx="12" cy="5" rx="9" ry="3" />
-                <path d="M3 5V19A9 3 0 0 0 15 21.84" />
-                <path d="M21 5V8" />
-                <path d="M21 12L18 17H22L19 22" />
-                <path d="M3 12A9 3 0 0 0 14.59 14.87" />
+                class="lucide lucide-circuit-board-icon lucide-circuit-board nav-icon">
+                <rect width="18" height="18" x="3" y="3" rx="2" />
+                <path d="M11 9h4a2 2 0 0 0 2-2V3" />
+                <circle cx="9" cy="9" r="2" />
+                <path d="M7 21v-4a2 2 0 0 1 2-2h4" />
+                <circle cx="15" cy="15" r="2" />
               </svg>
-              <p>Akun </p>
+              <p>Kegiatan </p>
             </a>
           </li>
         @endif

@@ -4,7 +4,7 @@
 
     {{-- button  --}}
     <div class="col-12">
-      <a href="{{ route('sub-akun.create') }}" class="btn btn-success mb-3">Tambah Sub Akun</a>
+      <a href="{{ route('kegiatan.create') }}" class="btn btn-success mb-3">Tambah Kegiatan</a>
     </div>
 
     <div class="col-12">
@@ -16,6 +16,7 @@
           <div class="card-tools">
             <div class="input-group input-group-sm" style="width: 210px;">
               <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
             </div>
           </div>
         </div>
@@ -25,23 +26,24 @@
             <thead>
               <tr>
                 <th>#</th>
-                <th>Kode Akun Utama</th>
-                <th>Kode Sub Akun</th>
-                <th>Nama Sub Akun</th>
+                <th>Kode kegiatan</th>
+                <th>Nama kegiatan</th>
+                <th>Output</th>
                 <th>Aksi</th>
               </tr>
             </thead>
             <tbody>
-              @forelse ($subAkun as $index => $row)
+              @forelse ($kegiatan as $index => $row)
                 <tr>
-                  <td>{{ $index + $subAkun->firstItem() }}</td>
-                  <td>{{ $row->akun->kode_akun }}</td>
-                  <td>{{ $row->kode_sub_akun }}</td>
-                  <td>{{ $row->nama_sub_akun }}</td>
+                  <td>{{ $index + $kegiatan->firstItem() }}</td>
+                  <td>{{ $row->kode_kegiatan }}</td>
+                  <td>{{ $row->nama_kegiatan }}</td>
                   <td>
-                    <a href="{{ route('sub-akun.show', $row->uuid) }}" class="btn btn-success btn-sm">Detail</a>
-                    <a href="{{ route('sub-akun.edit', $row->uuid) }}" class="btn btn-info btn-sm">Edit</a>
-                    <x-confirm-delete action="{{ route('sub-akun.destroy', $row->uuid) }}" />
+                    <a href="{{ route('kegiatan.output', $row->uuid) }}" class="btn btn-success btn-sm">Output</a>
+                  </td>
+                  <td>
+                    <a href="{{ route('kegiatan.edit', $row->uuid) }}" class="btn btn-info btn-sm">Edit</a>
+                    <x-confirm-delete action="{{ route('kegiatan.destroy', $row->id) }}" />
                   </td>
                 </tr>
               @empty
@@ -55,8 +57,6 @@
       </div>
     </div>
 
-    <div class="d-flex justify-content-center align-items-center text-sm">
-      {{ $subAkun->links() }}
-    </div>
+    {{ $kegiatan->links() }}
   </div>
 @endsection

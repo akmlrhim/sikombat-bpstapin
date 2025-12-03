@@ -53,13 +53,11 @@ class AuthController extends Controller
 		return redirect()->intended('/home');
 	}
 
-
 	public function logout(Request $request)
 	{
 		Auth::logout();
 		$request->session()->invalidate();
 		$request->session()->regenerateToken();
-		Alert::info('Info', 'Anda telah logout.');
 		return redirect('/');
 	}
 }

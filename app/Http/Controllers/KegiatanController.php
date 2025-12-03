@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Akun;
+use App\Models\Kegiatan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use RealRashid\SweetAlert\Facades\Alert;
 
-class AkunController extends Controller
+class KegiatanController extends Controller
 {
 	/**
 	 * Display a listing of the resource.
 	 */
 	public function index()
 	{
-		return view('akun.index', [
-			'title' => 'Akun',
-			'akun' => Akun::paginate(10)
+		return view('kegiatan.index', [
+			'title' => 'Kegiatan',
+			'kegiatan' => Kegiatan::paginate(10)
 		]);
 	}
 
@@ -26,8 +26,8 @@ class AkunController extends Controller
 	 */
 	public function create()
 	{
-		return view('akun.create', [
-			'title' => 'Tambah Akun'
+		return view('kegiatan.create', [
+			'title' => 'Tambah Kegiatan'
 		]);
 	}
 
@@ -42,25 +42,25 @@ class AkunController extends Controller
 		]);
 
 		$request->validate([
-			'kode_akun' => 'required|unique:akun,kode_akun',
-			'nama_akun' => 'required',
+			'kode_kegiatan' => 'required|unique:kegiatan,kode_kegiatan',
+			'nama_kegiatan' => 'required',
 			'pagu_anggaran' => 'required|numeric',
 		]);
 
 		try {
 			DB::beginTransaction();
 
-			Akun::create([
+			Kegiatan::create([
 				'uuid' => Str::uuid(),
-				'kode_akun' => $request->kode_akun,
-				'nama_akun' => $request->nama_akun,
+				'kode_kegiatan' => $request->kode_kegiatan,
+				'nama_kegiatan' => $request->nama_kegiatan,
 				'pagu_anggaran' => $request->pagu_anggaran,
 				'sisa_anggaran' => $request->pagu_anggaran,
 			]);
 
 			DB::commit();
-			Alert::success('Berhasil', 'Akun berhasil disimpan.');
-			return redirect()->route('akun.index');
+			Alert::success('Berhasil', 'Kegiatan berhasil disimpan.');
+			return redirect()->route('kegiatan.index');
 		} catch (\Exception $e) {
 			DB::rollBack();
 			Alert::error('Error', 'Terjadi kesalahan.');
@@ -73,9 +73,9 @@ class AkunController extends Controller
 	 */
 	public function edit(string $uuid)
 	{
-		return view('akun.edit', [
-			'title' => 'Edit Akun',
-			'akun' => Akun::where('uuid', $uuid)->first(),
+		return view('kegiatan.edit', [
+			'title' => 'Edit Kegiatan',
+			'kegiatan' => Kegiatan::where('uuid', $uuid)->first(),
 		]);
 	}
 
@@ -89,18 +89,10 @@ class AkunController extends Controller
 			'sisa_anggaran' => preg_replace('/[^0-9]/', '', $request->pagu_anggaran),
 		]);
 
-		if (isset($request->sub_akun['kegiatan'])) {
-			foreach ($request->sub_akun['kegiatan'] as $j => $kegiatan) {
-				$request->merge([
-					"sub_akun.kegiatan.$j.harga_satuan" => preg_replace('/[^0-9]/', '', $kegiatan['harga_satuan']),
-				]);
-			}
-		}
-
 		// Validasi input
 		$validated = $request->validate([
-			'kode_akun' => 'required|string',
-			'nama_akun' => 'required|string',
+			'kode_kegiatan' => 'required|string',
+			'nama_kegiatan' => 'required|string',
 			'pagu_anggaran' => 'required|numeric',
 			'sisa_anggaran' => 'required|numeric',
 		]);
@@ -108,18 +100,18 @@ class AkunController extends Controller
 		try {
 			DB::beginTransaction();
 
-			$akun = Akun::where('uuid', $uuid)->firstOrFail();
+			$kegiatan = Kegiatan::where('uuid', $uuid)->firstOrFail();
 
-			$akun->update([
-				'kode_akun' => $validated['kode_akun'],
-				'nama_akun' => $validated['nama_akun'],
+			$kegiatan->update([
+				'kode_kegiatan' => $validated['kode_kegiatan'],
+				'nama_kegiatan' => $validated['nama_kegiatan'],
 				'pagu_anggaran' => $validated['pagu_anggaran'],
 				'sisa_anggaran' => $validated['sisa_anggaran'],
 			]);
 
 			DB::commit();
-			Alert::success('Berhasil', 'Akun berhasil diperbarui.');
-			return redirect()->route('akun.index');
+			Alert::success('Berhasil', 'kegiatan berhasil diperbarui.');
+			return redirect()->route('kegiatan.index');
 		} catch (\Exception $e) {
 			DB::rollBack();
 			Alert::error('Error', 'Terjadi kesalahan.');
@@ -135,10 +127,10 @@ class AkunController extends Controller
 		try {
 			DB::beginTransaction();
 
-			Akun::findOrFail($id)->delete();
+			Kegiatan::findOrFail($id)->delete();
 
 			DB::commit();
-			Alert::success('Berhasil', 'Akun berhasil dihapus.');
+			Alert::success('Berhasil', 'kegiatan berhasil dihapus.');
 			return redirect()->back();
 		} catch (\Exception $e) {
 			DB::rollBack();
@@ -147,11 +139,11 @@ class AkunController extends Controller
 		}
 	}
 
-	public function subAkun($uuid)
+	public function output($uuid)
 	{
-		return view('akun.sub-akun', [
-			'title' => 'Sub Akun',
-			'akun' => Akun::with('subAkun')->where('uuid', $uuid)->first()
+		return view('kegiatan.output', [
+			'title' => 'Output',
+			'kegiatan' => Kegiatan::with('output')->where('uuid', $uuid)->first()
 		]);
 	}
 }

@@ -4,26 +4,27 @@
   <div class="col-md-6">
     <div class="card card-primary">
       <div class="card-body">
-        <form method="POST" action="{{ route('akun.update', $akun->uuid) }}">
+        <form method="POST" action="{{ route('kegiatan.update', $kegiatan->uuid) }}">
           @csrf
           @method('PUT')
 
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
-                <label>Kode Akun Utama</label>
-                <input type="text" name="kode_akun" class="form-control @error('kode_akun') is-invalid @enderror"
-                  value="{{ old('kode_akun', $akun->kode_akun) }}">
-                @error('kode_akun')
+                <label>Kode kegiatan</label>
+                <input type="text" name="kode_kegiatan" class="form-control @error('kode_kegiatan') is-invalid @enderror"
+                  value="{{ old('kode_kegiatan', $kegiatan->kode_kegiatan) }}">
+                @error('kode_kegiatan')
                   <x-input-validation>{{ $message }}</x-input-validation>
                 @enderror
               </div>
 
               <div class="form-group">
-                <label>Nama Akun Utama</label>
-                <input type="text" name="nama_akun" class="form-control @error('nama_akun') is-invalid @enderror"
-                  value="{{ old('nama_akun', $akun->nama_akun) }}">
-                @error('nama_akun')
+                <label>Nama kegiatan</label>
+                <input type="text" name="nama_kegiatan"
+                  class="form-control @error('nama_kegiatan') is-invalid @enderror"
+                  value="{{ old('nama_kegiatan', $kegiatan->nama_kegiatan) }}">
+                @error('nama_kegiatan')
                   <x-input-validation>{{ $message }}</x-input-validation>
                 @enderror
               </div>
@@ -32,7 +33,7 @@
                 <label>Pagu Anggaran</label>
                 <input type="text" inputmode="numeric" name="pagu_anggaran" id="pagu_anggaran"
                   class="format-rupiah form-control @error('pagu_anggaran') is-invalid @enderror"
-                  value="{{ old('pagu_anggaran', $akun->pagu_anggaran) }}">
+                  value="{{ old('pagu_anggaran', $kegiatan->pagu_anggaran) }}">
                 @error('pagu_anggaran')
                   <x-input-validation>{{ $message }}</x-input-validation>
                 @enderror
@@ -42,7 +43,7 @@
                 <label>Sisa Anggaran</label>
                 <input type="text" inputmode="numeric" name="sisa_anggaran" id="sisa_anggaran"
                   class="format-rupiah form-control @error('sisa_anggaran') is-invalid @enderror"
-                  value="{{ old('sisa_anggaran', $akun->sisa_anggaran) }}">
+                  value="{{ old('sisa_anggaran', $kegiatan->sisa_anggaran) }}">
                 @error('sisa_anggaran')
                   <x-input-validation>{{ $message }}</x-input-validation>
                 @enderror
@@ -51,7 +52,7 @@
           </div>
 
           <div class="mt-3">
-            <a href="{{ route('akun.index') }}" class="btn btn-secondary">Kembali</a>
+            <a href="{{ route('kegiatan.index') }}" class="btn btn-secondary">Kembali</a>
             <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
           </div>
 

@@ -55,10 +55,10 @@
           </table>
         </div>
 
-        {{-- data kegiatan mitra --}}
-        <h4 class="text-primary mb-0">Data kegiatan</h4>
+        {{-- data tugas mitra --}}
+        <h4 class="text-primary mb-0">Data Tugas</h4>
         <div class="table-responsive p-0">
-          <table class="table-sm text-sm table-bordered table text-nowrap align-middle">
+          <table class="table-sm table-bordered table text-nowrap align-middle">
             <thead>
               <tr class="text-center">
                 <th>Kode Akun</th>
@@ -77,8 +77,8 @@
             <tbody>
               @forelse ($kontrak->detail as $row)
                 <tr>
-                  <td>{{ $row->subAkun->kode_sub_akun }}.{{ $row->kegiatan->kode_akun_kegiatan }}</td>
-                  <td>{{ $row->kegiatan->nama_kegiatan }}</td>
+                  <td>{{ $row->output->kode_output }}.{{ $row->komponen->kode_komponen }}</td>
+                  <td>{{ $row->komponen->nama_komponen }}</td>
 
                   <td>
                     <div class="d-flex justify-content-between mt-1 fw-normal">
@@ -87,7 +87,7 @@
                     </div>
                   </td>
 
-                  <td>Rp {{ number_format($row->kegiatan->harga_satuan, 0, ',', '.') }}</td>
+                  <td>Rp {{ number_format($row->komponen->harga_satuan, 0, ',', '.') }}</td>
                   <td>Rp {{ number_format($row->total_honor, 0, ',', '.') }}</td>
                 </tr>
               @empty
@@ -101,16 +101,6 @@
                 <tr>
                   <td colspan="4" class="text-right">Jumlah Honor diterima</td>
                   <td>Rp {{ number_format($kontrak->detail->sum('total_honor'), 0, ',', '.') }}</td>
-                </tr>
-                <tr>
-                  <td colspan="4" class="text-right">Persentase Keberhasilan</td>
-                  <td>
-                    {{ number_format(
-                        ($kontrak->detail->sum('jumlah_dokumen') / $kontrak->detail->sum('jumlah_target_dokumen')) * 100,
-                        2,
-                    ) }}%
-
-                  </td>
                 </tr>
               </tfoot>
             @endif

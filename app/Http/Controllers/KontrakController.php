@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Akun;
 use App\Models\DetailKontrak;
 use App\Models\Kegiatan;
+use App\Models\Komponen;
 use App\Models\Kontrak;
 use App\Models\Mitra;
 use App\Models\Settings;
@@ -20,11 +20,28 @@ class KontrakController extends Controller
 	/**
 	 * Display a listing of the resource.
 	 */
-	public function index()
+	public function index(Request $request)
 	{
+		$query = Kontrak::with('mitra');
+
+		// cari nama mitra 
+		if ($request->keyword) {
+			$query->whereHas('mitra', function ($q) use ($request) {
+				$q->where('nama_lengkap', 'LIKE', '%' . $request->keyword . '%');
+			});
+		}
+
+		// filter periode 
+		if ($request->periode) {
+			$year = date('Y', strtotime($request->periode));
+			$month = date('m', strtotime($request->periode));
+
+			$query->whereYear('periode', $year)->whereMonth('periode', $month);
+		}
+
 		return view('kontrak.index', [
 			'title' => 'Kontrak Mitra',
-			'kontrak' => Kontrak::paginate(10)
+			'kontrak' => $query->paginate(10)->withQueryString()
 		]);
 	}
 
@@ -36,7 +53,7 @@ class KontrakController extends Controller
 		return view('kontrak.create', [
 			'title' => 'Tambah Kontrak',
 			'mitra' => Mitra::get(),
-			'akun' => Akun::get(),
+			'kegiatan' => Kegiatan::get(),
 		]);
 	}
 
@@ -67,9 +84,9 @@ class KontrakController extends Controller
 
 			// validasi detail kegiatan kontrak 
 			'detail' => 'required|array|distinct',
-			'detail.*.id_akun' => 'required|exists:akun,id',
-			'detail.*.id_sub_akun' => 'required|exists:sub_akun,id',
-			'detail.*.id_kegiatan' => 'required|exists:kegiatan,id|distinct',
+			'detail.*.id_kegiatan' => 'required|exists:kegiatan,id',
+			'detail.*.id_output' => 'required|exists:output,id',
+			'detail.*.id_komponen' => 'required|exists:komponen,id|distinct',
 			'detail.*.jumlah_target_dokumen' => 'required|numeric|min:0',
 			'detail.*.jumlah_dokumen' => [
 				'required',
@@ -118,18 +135,18 @@ class KontrakController extends Controller
 
 			foreach ($request->detail as $d) {
 
-				$kegiatan = Kegiatan::findOrFail($d['id_kegiatan']);
-				$totalHonorPerKegiatan = $d['jumlah_dokumen'] * $kegiatan->harga_satuan;
-				$totalHonorKontrak += $totalHonorPerKegiatan;
+				$komponen = Komponen::findOrFail($d['id_komponen']);
+				$totalHonorPerKomponen = $d['jumlah_dokumen'] * $komponen->harga_satuan;
+				$totalHonorKontrak += $totalHonorPerKomponen;
 
 				DetailKontrak::create([
 					'id_kontrak' => $kontrak->id,
-					'id_akun' => $d['id_akun'],
-					'id_sub_akun' => $d['id_sub_akun'],
 					'id_kegiatan' => $d['id_kegiatan'],
-					'jumlah_target_dokumen' => $d['jumlah_target_dokumen'],
+					'id_output' => $d['id_output'],
+					'id_komponen' => $d['id_komponen'],
+					'jumlah_target_dokumen' => $d['jumlah_target_dokumen'] ?? $komponen->jumlah_sampel,
 					'jumlah_dokumen' => $d['jumlah_dokumen'],
-					'total_honor' => $totalHonorPerKegiatan
+					'total_honor' => $totalHonorPerKomponen
 				]);
 			}
 
@@ -144,10 +161,12 @@ class KontrakController extends Controller
 			$kontrak->update(['total_honor' => $totalHonorKontrak]);
 
 			DB::commit();
-			return redirect()->route('kontrak.index')->with('success', 'Kontrak berhasil dibuat.');
+			Alert::success('Berhasil', 'Kontrak berhasil dibuat.');
+			return redirect()->route('kontrak.index');
 		} catch (\Exception $e) {
 			DB::rollBack();
-			return back()->with('error', 'Terjadi kesalahan.' . $e->getMessage());
+			Alert::warning('Error', 'Terjadi kesalahan.');
+			return back()->withInput();
 		}
 	}
 
@@ -159,7 +178,7 @@ class KontrakController extends Controller
 		return view('kontrak.show', [
 			'title' => 'Detail Kontrak',
 			'kontrak' => Kontrak::with(
-				['mitra', 'detail', 'detail.akun', 'detail.subAkun', 'detail.kegiatan']
+				['mitra', 'detail', 'detail.kegiatan', 'detail.output', 'detail.komponen']
 			)->where('uuid', $uuid)->firstOrFail()
 		]);
 	}
@@ -171,11 +190,12 @@ class KontrakController extends Controller
 	{
 		return view('kontrak.edit', [
 			'title' => 'Edit Kontrak',
-			'akun' => Akun::get(),
+			'kegiatan' => Kegiatan::get(),
 			'kontrak' => Kontrak::with('detail')->where('uuid', $uuid)->firstOrFail(),
 			'mitra' => Mitra::get()
 		]);
 	}
+
 
 	/**
 	 * Update the specified resource in storage.
@@ -205,9 +225,9 @@ class KontrakController extends Controller
 
 			// validasi detail kegiatan kontrak 
 			'detail' => 'required|array|distinct',
-			'detail.*.id_akun' => 'required|exists:akun,id',
-			'detail.*.id_sub_akun' => 'required|exists:sub_akun,id',
-			'detail.*.id_kegiatan' => 'required|exists:kegiatan,id|distinct',
+			'detail.*.id_kegiatan' => 'required|exists:kegiatan,id',
+			'detail.*.id_output' => 'required|exists:output,id',
+			'detail.*.id_komponen' => 'required|exists:komponen,id|distinct',
 			'detail.*.jumlah_target_dokumen' => 'required|numeric|min:0',
 			'detail.*.jumlah_dokumen' => [
 				'required',
@@ -241,14 +261,14 @@ class KontrakController extends Controller
 			$totalHonor = 0;
 
 			foreach ($request->detail as $d) {
-				$kegiatan = Kegiatan::findOrFail($d['id_kegiatan']);
-				$total = $d['jumlah_dokumen'] * $kegiatan->harga_satuan;
+				$komponen = Komponen::findOrFail($d['id_komponen']);
+				$total = $d['jumlah_dokumen'] * $komponen->harga_satuan;
 				$totalHonor += $total;
 
 				$kontrak->detail()->create([
-					'id_akun' => $d['id_akun'],
-					'id_sub_akun' => $d['id_sub_akun'],
 					'id_kegiatan' => $d['id_kegiatan'],
+					'id_output' => $d['id_output'],
+					'id_komponen' => $d['id_komponen'],
 					'jumlah_target_dokumen' => $d['jumlah_target_dokumen'],
 					'jumlah_dokumen' => $d['jumlah_dokumen'],
 					'total_honor' => $total
@@ -265,10 +285,12 @@ class KontrakController extends Controller
 			$kontrak->update(['total_honor' => $totalHonor]);
 
 			DB::commit();
-			return redirect()->route('kontrak.index')->with('success', 'Kontrak berhasil diperbarui.');
+			Alert::success('Berhasil', 'Kontrak berhasil diperbarui.');
+			return redirect()->route('kontrak.index');
 		} catch (\Exception $e) {
 			DB::rollBack();
-			return back()->with('error', 'Terjadi kesalahan.' . $e->getMessage());
+			Alert::error('Error', 'Terjadi kesalahan.' . $e->getMessage());
+			return back()->withInput();
 		}
 	}
 
@@ -282,10 +304,12 @@ class KontrakController extends Controller
 			$kontrak->delete();
 
 			DB::commit();
-			return back()->with('success', 'Kontrak berhasil dihapus.');
+			Alert::success('Berhasil', 'Kontrak berhasil dihapus.');
+			return back();
 		} catch (\Exception $e) {
 			DB::rollBack();
-			return back()->with('error', 'Terjadi kesalahan.');
+			Alert::error('Error', 'Terjadi kesalahan.');
+			return back()->withInput();
 		}
 	}
 
@@ -295,7 +319,7 @@ class KontrakController extends Controller
 		$pjbPembuatKomit = Settings::where('key', 'pejabat_pembuat_komitmen')->value('value');
 
 		$kontrak = Kontrak::with(
-			['mitra', 'detail', 'detail.akun', 'detail.subAkun', 'detail.kegiatan']
+			['mitra', 'detail', 'detail.kegiatan', 'detail.output', 'detail.komponen']
 		)->where('uuid', $uuid)->firstOrFail();
 
 		$pdf = Pdf::loadView('kontrak.file-kontrak', compact('kepalaBps', 'pjbPembuatKomit', 'kontrak'))->setPaper('A4', 'potrait');
@@ -315,6 +339,4 @@ class KontrakController extends Controller
 
 		return $pdf->stream('File Kontrak-' . time() . '.pdf');
 	}
-
-	public function report(string $uuid) {}
 }
