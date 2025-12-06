@@ -31,7 +31,7 @@ class UserController extends Controller
 			});
 		}
 
-		$user = $query->latest()->paginate(10)->onEachSide(1)->withQueryString();
+		$user = $query->latest()->simplePaginate(10)->onEachSide(1)->withQueryString();
 
 		return view('user.index', compact('title', 'user'));
 	}

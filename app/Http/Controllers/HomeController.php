@@ -10,30 +10,35 @@ use App\Models\Visit;
 
 class HomeController extends Controller
 {
-  public function index()
-  {
-    $title = 'Home';
-    $range = request('range', 7);
-    $visits = Visit::where('created_at', '>=', now()->subDays($range))->get();
-    $totalVisits = $visits->count();
-    $dates = collect();
-    for ($i = $range - 1; $i >= 0; $i--) {
-      $dates->push(now()->subDays($i)->format('Y-m-d'));
-    }
+	public function index()
+	{
+		$title = 'Home';
+		$range = request('range', 7);
+		$visits = Visit::where('created_at', '>=', now()->subDays($range))->get();
+		$dates = collect();
+		for ($i = $range - 1; $i >= 0; $i--) {
+			$dates->push(now()->subDays($i)->format('Y-m-d'));
+		}
 
-    $visitsPerDay = $dates->map(function ($date) use ($visits) {
-      $count = $visits->filter(fn($v) => $v->created_at->format('Y-m-d') === $date)->count();
-      return [
-        'date' => $date,
-        'count' => $count,
-      ];
-    });
+		$kontrak = Kontrak::with('mitra')->latest()->limit(5)->get();
 
-    return view('home', compact(
-      'title',
-      'totalVisits',
-      'visitsPerDay',
-      'range'
-    ));
-  }
+		$userBrowser = $visits->groupBy('browser')->map->count();
+
+		$visitsPerDay = $dates->map(function ($date) use ($visits) {
+			$count = $visits->filter(fn($v) => $v->created_at->format('Y-m-d') === $date)->count();
+			return [
+				'date' => $date,
+				'count' => $count,
+			];
+		});
+
+		return view('home', compact(
+			'title',
+			'visits',
+			'visitsPerDay',
+			'range',
+			'userBrowser',
+			'kontrak'
+		));
+	}
 }

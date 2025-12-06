@@ -10,38 +10,48 @@ use Illuminate\Support\Facades\DB;
 
 class VisitSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
-    public function run(): void
-    {
-        $faker = Faker::create();
+	/**
+	 * Run the database seeds.
+	 */
+	public function run(): void
+	{
+		$faker = Faker::create();
 
-        $users = User::all()->pluck('id')->toArray();
+		$users = User::all()->pluck('id')->toArray();
 
-        $visits = [];
+		$browser = [
+			"Chrome",
+			"Firefox",
+			"Safari",
+			"Edge",
+			"Opera",
+			"Brave",
+			"Samsung Internet",
+			"UC Browser",
+			"Vivaldi",
+			"Internet Explorer",
+			"Yandex Browser",
+			"Maxthon",
+			"QQ Browser",
+			"Baidu Browser",
+			"KaiOS Browser",
+		];
 
-        // Buat 300 pengunjung anonim
-        for ($i = 0; $i < 300; $i++) {
-            $visits[] = [
-                'user_id' => null,
-                'ip' => $faker->ipv4,
-                'created_at' => $faker->dateTimeBetween('-30 days', 'now'),
-                'updated_at' => now(),
-            ];
-        }
 
-        // Buat 200 pengunjung login
-        for ($i = 0; $i < 200; $i++) {
-            $visits[] = [
-                'user_id' => $faker->randomElement($users),
-                'ip' => $faker->ipv4,
-                'created_at' => $faker->dateTimeBetween('-30 days', 'now'),
-                'updated_at' => now(),
-            ];
-        }
+		$visits = [];
 
-        // Insert ke database sekaligus
-        DB::table('visits')->insert($visits);
-    }
+		// Buat 200 pengunjung login
+		for ($i = 0; $i < 600; $i++) {
+			$visits[] = [
+				'user_id' => $faker->randomElement($users),
+				'ip' => $faker->ipv4,
+				'browser' => $faker->randomElement($browser),
+				'created_at' => $faker->dateTimeBetween('-30 days', 'now'),
+				'updated_at' => now(),
+			];
+		}
+
+		// Insert ke database sekaligus
+		DB::table('visits')->insert($visits);
+	}
 }

@@ -92,7 +92,7 @@ Route::middleware('throttle:60,1')->group(function () {
 		// stats pengunjung web route 
 		Route::get('pengunjung-web', function () {
 			$title = 'Pengunjung Web';
-			$visitor = Visit::with('users')->paginate(10);
+			$visitor = Visit::with('users')->simplePaginate(15);
 
 			return view('visit', compact('visitor', 'title'));
 		})->name('visit')->middleware('role:admin');

@@ -41,7 +41,7 @@ class KontrakController extends Controller
 
 		return view('kontrak.index', [
 			'title' => 'Kontrak Mitra',
-			'kontrak' => $query->paginate(10)->withQueryString()
+			'kontrak' => $query->simplePaginate(10)->withQueryString()
 		]);
 	}
 
@@ -289,7 +289,7 @@ class KontrakController extends Controller
 			return redirect()->route('kontrak.index');
 		} catch (\Exception $e) {
 			DB::rollBack();
-			Alert::error('Error', 'Terjadi kesalahan.' . $e->getMessage());
+			Alert::error('Error', 'Terjadi kesalahan.');
 			return back()->withInput();
 		}
 	}

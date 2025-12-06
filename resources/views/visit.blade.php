@@ -5,7 +5,7 @@
     <div class="col-12">
       <div class="card">
         <div class="card-body table-responsive p-0">
-          <table class="table table-bordered table-sm text-nowrap text-sm">
+          <table class="table table-bordered table-sm text-nowrap">
             <thead class="bg-success">
               <tr>
                 <th>#</th>
@@ -36,10 +36,10 @@
           <!-- /.card-body -->
         </div>
 
-        <div class="p-2">
-          {{ $visitor->links() }}
-        </div>
         <!-- /.card -->
+      </div>
+      <div class="d-flex justify-content-center align-items-center">
+        {{ $visitor->links() }}
       </div>
     </div>
   </div>

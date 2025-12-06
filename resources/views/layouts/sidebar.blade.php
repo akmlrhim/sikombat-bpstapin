@@ -1,8 +1,6 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <a href="{{ route('home') }}" class="brand-link">
-    <img src="{{ asset('img/logo_bps.webp') }}" loading="lazy" title="Logo" alt="Logo"
-      class="brand-image img-circle" />
-    <span class="brand-text font-weight-bold text-md">SIKOMBAT</span>
+    <span class="brand-text font-weight-bold text-lg ml-4">SIKOMBAT</span>
   </a>
 
   <div class="sidebar">
@@ -55,22 +53,23 @@
               <p>Kegiatan </p>
             </a>
           </li>
-        @endif
 
-        <li class="nav-item">
-          <a href="{{ route('kontrak.index') }}" class="nav-link {{ request()->routeIs('kontrak.*') ? 'active' : '' }}">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-              class="lucide lucide-receipt-text-icon lucide-receipt-text nav-icon">
-              <path d="M13 16H8" />
-              <path d="M14 8H8" />
-              <path d="M16 12H8" />
-              <path
-                d="M4 3a1 1 0 0 1 1-1 1.3 1.3 0 0 1 .7.2l.933.6a1.3 1.3 0 0 0 1.4 0l.934-.6a1.3 1.3 0 0 1 1.4 0l.933.6a1.3 1.3 0 0 0 1.4 0l.933-.6a1.3 1.3 0 0 1 1.4 0l.934.6a1.3 1.3 0 0 0 1.4 0l.933-.6A1.3 1.3 0 0 1 19 2a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1 1.3 1.3 0 0 1-.7-.2l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.934.6a1.3 1.3 0 0 1-1.4 0l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-1.4 0l-.934-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-.7.2 1 1 0 0 1-1-1z" />
-            </svg>
-            <p>Kontrak</p>
-          </a>
-        </li>
+          <li class="nav-item">
+            <a href="{{ route('kontrak.index') }}"
+              class="nav-link {{ request()->routeIs('kontrak.*') ? 'active' : '' }}">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-receipt-text-icon lucide-receipt-text nav-icon">
+                <path d="M13 16H8" />
+                <path d="M14 8H8" />
+                <path d="M16 12H8" />
+                <path
+                  d="M4 3a1 1 0 0 1 1-1 1.3 1.3 0 0 1 .7.2l.933.6a1.3 1.3 0 0 0 1.4 0l.934-.6a1.3 1.3 0 0 1 1.4 0l.933.6a1.3 1.3 0 0 0 1.4 0l.933-.6a1.3 1.3 0 0 1 1.4 0l.934.6a1.3 1.3 0 0 0 1.4 0l.933-.6A1.3 1.3 0 0 1 19 2a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1 1.3 1.3 0 0 1-.7-.2l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.934.6a1.3 1.3 0 0 1-1.4 0l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-1.4 0l-.934-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-.7.2 1 1 0 0 1-1-1z" />
+              </svg>
+              <p>Kontrak</p>
+            </a>
+          </li>
+        @endif
 
         <li class="nav-header text-muted">Tambahan</li>
 

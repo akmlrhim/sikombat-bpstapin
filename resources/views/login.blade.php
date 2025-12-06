@@ -25,7 +25,7 @@
 <body class="bg-light">
   <div class="container-fluid min-vh-100 d-flex align-items-center justify-content-center bg-light">
     <div class="col-11 col-sm-10 col-md-8 col-lg-5 col-xl-4">
-      <div class="card shadow-lg border-0 rounded-lg overflow-hidden">
+      <div class="card shadow-sm border-0 rounded-md overflow-hidden">
         <div class="card-body p-5 bg-white">
           <div class="text-center mb-4">
             <img src="{{ asset('img/logo_bps.webp') }}" alt="Logo" class="mb-3" style="width: 80px; height: auto;"
@@ -39,16 +39,17 @@
             @csrf
 
             <div class="form-group mb-3">
-              <label for="email" class="form-label font-weight-bold">Email</label>
+              <label for="email">Email</label>
               <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
-                name="email" value="{{ old('email') }}" placeholder="Masukkan email anda" autofocus
-                autocomplete="off">
+                name="email" placeholder="Masukkan email anda" value="{{ old('email') }}" autocomplete="off">
+
               @error('email')
                 <x-input-validation>{{ $message }}</x-input-validation>
               @enderror
             </div>
 
-            <div class="form-group mb-4">
+
+            <div class="form-group mb-3">
               <label for="password" class="form-label font-weight-bold">Password</label>
               <div class="input-group">
                 <input type="password" class="form-control @error('password') is-invalid @enderror" id="password"

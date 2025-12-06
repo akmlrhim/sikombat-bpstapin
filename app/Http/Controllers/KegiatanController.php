@@ -17,7 +17,7 @@ class KegiatanController extends Controller
 	{
 		return view('kegiatan.index', [
 			'title' => 'Kegiatan',
-			'kegiatan' => Kegiatan::paginate(10)
+			'kegiatan' => Kegiatan::simplePaginate(10)
 		]);
 	}
 
