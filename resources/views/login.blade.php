@@ -35,6 +35,13 @@
             <p class="text-muted">Silakan masuk untuk melanjutkan</p>
           </div>
 
+          @if (session('error'))
+            <div class="alert alert-danger text-sm">
+              {{ session('error') }}
+            </div>
+          @endif
+
+
           <form method="POST" action="{{ route('login') }}" id="login-form">
             @csrf
 

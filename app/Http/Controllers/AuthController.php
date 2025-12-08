@@ -37,13 +37,11 @@ class AuthController extends Controller
 		$captcha = ReCaptchaServices::verify($request->input('g-recaptcha-response'));
 
 		if (!($captcha['success'] ?? false)) {
-			Alert::info('Info', 'Verifikasi ReCaptcha gagal, coba lagi.');
-			return back()->withInput();
+			return back()->with('error', 'Verifikasi ReCaptcha gagal, coba lagi.')->withInput();
 		}
 
 		if (($captcha['score'] ?? 0) < 0.5) {
-			Alert::info('Info', 'Aktivitas mencurigaka terdeteksi, matikan VPN.');
-			return back()->withInput();
+			return back()->withInput()->with('error', 'Aktivitas mencurigaka terdeteksi, matikan VPN.');
 		}
 
 		Auth::login($user);
