@@ -1,8 +1,3 @@
-# SIKOMBAT BPS Tapin
-
-Aplikasi SIKOMBAT (Sistem Informasi dan Komunikasi) untuk Badan Pusat Statistik (BPS) Kabupaten Tapin.
-Aplikasi ini dibangun menggunakan framework Laravel.
-
 ## Persyaratan Sistem
 
 - PHP >= 8.2 (Dianjurkan PHP 8.3 karena server lokal sebelumnya menggunakan 8.3.9)
