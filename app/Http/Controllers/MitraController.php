@@ -24,7 +24,7 @@ class MitraController extends Controller
 			return $query->where('nama_lengkap', 'like', "%{$keyword}%");
 		})
 			->latest()
-			->simplePaginate(10)
+			->paginate(10)
 			->appends(['search' => $keyword]);
 
 		return view('mitra.index', compact('title', 'mitra', 'keyword'));

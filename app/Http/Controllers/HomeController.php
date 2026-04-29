@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Anggaran;
 use App\Models\Kontrak;
-use App\Models\Mitra;
-use App\Models\User;
 use App\Models\Visit;
 
 class HomeController extends Controller
@@ -31,6 +28,7 @@ class HomeController extends Controller
 				'count' => $count,
 			];
 		});
+
 
 		return view('home', compact(
 			'title',
