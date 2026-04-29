@@ -156,7 +156,3 @@ Agar gambar atau file dokumen yang diunggah dapat diakses dari browser, Anda per
 #### F. Sesuaikan Versi PHP
 
 Buka menu **Select PHP Version** atau **PHP Configuration** di Control Panel Anda. Pastikan versi PHP yang aktif disetel minimal ke versi **8.2** atau **8.3**.
-
-### Selesai 🎉
-
-Sekarang aplikasi Anda sudah _live_ dan dapat diakses dengan membuka domain utama Anda di browser.
